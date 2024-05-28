@@ -69,7 +69,7 @@ class _RestaurarPwsdState extends State<RestaurarPwsd> {
                   },
                 ),
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               commonButton(
                 icon: Icons.mail_rounded,
                 color_icon: AppColors.primaryColor,
