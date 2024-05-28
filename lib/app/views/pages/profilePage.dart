@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 
 import '../../components/app_colors.dart';
 import '../../components/ClienteInfo.dart';
@@ -26,14 +25,6 @@ class _profilePageState extends State<profilePage> {
   late int telefono;
   late String direccion;
   late String correo;
-
-  @override
-  void initState(){
-    super.initState();
-    Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
-    cedula = jwtDecodedToken['cedula'];
-  }
-
 
   @override
   Widget build(BuildContext context) {

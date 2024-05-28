@@ -1,10 +1,15 @@
 import 'dart:convert';
+import 'dart:math';
 
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../models/Usuario.dart';
+import '../../models/dataUser.dart';
 import '../components/RestaurarPwsd.dart';
 import '../components/app_colors.dart';
 import '../components/commonButtons.dart';
@@ -102,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         children: [
                                           // Cédula o RUC
                                           TextFormField(
-                                            keyboardType: TextInputType.number,
+                                            keyboardType: TextInputType.emailAddress,
                                             focusNode: rucFocusNode,
                                             textInputAction: TextInputAction.next,
                                             onFieldSubmitted: (value) {
@@ -111,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             style: const TextStyle(color: Colors.white),
                                             controller: rucController,
                                             decoration: const InputDecoration(
-                                              labelText: "Cédula o RUC",
+                                              labelText: "Correo electrónico",
                                               hintStyle: TextStyle(color: Colors.white),
                                               labelStyle: TextStyle(color: Colors.white),
                                               enabledBorder: OutlineInputBorder(
@@ -135,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             textInputAction: TextInputAction.done,
                                             onFieldSubmitted: (value) {
                                               if (_loginKey.currentState!.validate()) {
-                                                _iniciarSesion();
+                                                print("Contraseña correcta");
                                               }
                                             },
                                             obscureText: !_isPasswordVisible,
@@ -224,7 +229,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void _iniciarSesion() async {
     await EasyLoading.show(status: 'Iniciando Sesión...');
 
-    final String cedula = rucController.text;
+    final String correo = rucController.text;
     final String password = passwordController.text;
 
     final response = await http.post(
@@ -233,7 +238,7 @@ class _LoginScreenState extends State<LoginScreen> {
         'Content-Type': 'application/json',
       },
       body: jsonEncode({
-        'cedula': cedula,
+        'correo': correo,
         'password': password,
       }),
     );
@@ -242,15 +247,38 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (response.statusCode == 200) {
       final responseBody = jsonDecode(response.body);
+      //Extrae el ID del cliente de la respuesta
+      final String name = responseBody['nombre'];
+      //final String clienteID = idObject.toString();
+      print(name);
+
+      if (kDebugMode) {
+        print("Sesión iniciada");
+      }
+
+      // Genera un nuevo JWT siempre
+      final jwt = JWT(
+        {
+          'correo': correo, // Puedes agregar más datos aquí según sea necesario
+          'rol': 'cliente',
+        },
+      );
+
+      // Firma y genera el token
+      final token = jwt.sign(SecretKey('secret_key')); // Usa tu clave secreta aquí
+      print(token);
+      // Guarda el token y el ID del cliente en la clase DataUser
+      //DataUser.token = token;
+      //DataUser.clienteId = clienteID;
 
       // Guarda el token o cualquier otro dato necesario
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('token', responseBody['token']);
+      await prefs.setString('token', token);
 
       // Navega a la pantalla principal
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const homeScreen()),
+        MaterialPageRoute(builder: (context) => homeScreen()),
       );
     } else {
       // Maneja los errores de inicio de sesión mostrando un AlertDialog
@@ -264,13 +292,13 @@ class _LoginScreenState extends State<LoginScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Error al iniciar sesión', style: const TextStyle(color: AppColors.contrastColor, fontWeight: FontWeight.w600)),
+          title: const Text('Error al iniciar sesión', style: TextStyle(color: AppColors.contrastColor, fontWeight: FontWeight.w600)),
           content: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text("Posibles errores:", style: const TextStyle(fontSize: 16,)),
+              const Text("Posibles errores:", style: TextStyle(fontSize: 16,)),
               const SizedBox(height: 8,),
               ListTile(
                 title: Column(
