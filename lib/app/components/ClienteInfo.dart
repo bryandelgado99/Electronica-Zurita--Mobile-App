@@ -10,14 +10,14 @@ class ClienteInfo extends StatelessWidget {
   final bool frecuente;
 
   const ClienteInfo({
-    Key? key,
     required this.nombreCliente,
     required this.cedulaCliente,
     required this.direccionCliente,
     required this.telefonoCliente,
     required this.correoCliente,
     required this.frecuente,
-  }) : super(key: key);
+  });
+
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class ClienteInfo extends StatelessWidget {
           _buildClienteDetail('Nombre:', nombreCliente),
           _buildClienteDetail('Cédula:', cedulaCliente),
           _buildClienteDetail('Dirección:', direccionCliente),
-          _buildClienteDetail('Teléfono:', telefonoCliente),
+          _buildClienteDetail('Teléfono:', '0$telefonoCliente'),
           _buildClienteDetail('Correo electrónico:', correoCliente),
           _buildClienteDetail('Frecuente:', frecuente ? "Sí" : "No"),
         ],

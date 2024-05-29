@@ -27,17 +27,17 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _loginKey = GlobalKey<FormState>();
-  final TextEditingController rucController = TextEditingController();
+  final TextEditingController correoController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final FocusNode rucFocusNode = FocusNode();
+  final FocusNode correoFocusNode = FocusNode();
   final FocusNode passwordFocusNode = FocusNode();
   bool _isPasswordVisible = false;
 
   @override
   void dispose() {
-    rucController.dispose();
+    correoController.dispose();
     passwordController.dispose();
-    rucFocusNode.dispose();
+    correoFocusNode.dispose();
     passwordFocusNode.dispose();
     super.dispose();
   }
@@ -104,16 +104,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                         children: [
                                           // Cédula o RUC
                                           TextFormField(
-                                            keyboardType: TextInputType.number,
-                                            focusNode: rucFocusNode,
+                                            keyboardType: TextInputType.emailAddress,
+                                            focusNode: correoFocusNode,
                                             textInputAction: TextInputAction.next,
                                             onFieldSubmitted: (value) {
-                                              FocusScope.of(context).requestFocus(passwordFocusNode);
+                                              FocusScope.of(context).requestFocus(correoFocusNode);
                                             },
                                             style: const TextStyle(color: Colors.white),
-                                            controller: rucController,
+                                            controller: correoController,
                                             decoration: const InputDecoration(
-                                              labelText: "Cédula o RUC",
+                                              labelText: "Correo electrónico",
                                               hintStyle: TextStyle(color: Colors.white),
                                               labelStyle: TextStyle(color: Colors.white),
                                               enabledBorder: OutlineInputBorder(
@@ -226,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void _iniciarSesion() async {
     await EasyLoading.show(status: 'Iniciando Sesión...');
 
-    final String cedula = rucController.text;
+    final String correo = correoController.text;
     final String password = passwordController.text;
 
     final response = await http.post(
@@ -235,7 +235,7 @@ class _LoginScreenState extends State<LoginScreen> {
         'Content-Type': 'application/json',
       },
       body: jsonEncode({
-        'cedula': cedula,
+        'correo': correo,
         'password': password,
       }),
     );
@@ -247,17 +247,18 @@ class _LoginScreenState extends State<LoginScreen> {
       //Extrae el ID del cliente de la respuesta
       final dynamic idObject = responseBody['_id'];
       final String clienteID = idObject.toString();
+      final String token = responseBody['token'];
 
-      // Genera un nuevo JWT siempre
-      final jwt = JWT(
-        {
-          'cedula': cedula, // Puedes agregar más datos aquí según sea necesario
-          'rol': 'cliente',
-        },
-      );
+      // // Genera un nuevo JWT siempre
+      // final jwt = JWT(
+      //   {
+      //     'id': clienteID,
+      //     'rol': 'cliente',
+      //   },
+      // );
 
-      // Firma y genera el token con la misma clave secreta que se usará para la verificación
-      final token = jwt.sign(SecretKey('secret_key')); // Usa tu clave secreta aquí
+      // // Firma y genera el token con la misma clave secreta que se usará para la verificación
+      // final token = jwt.sign(SecretKey('zurita')); // Usa tu clave secreta aquí
 
       if (kDebugMode) {
         print("Sesión iniciada");
@@ -265,24 +266,26 @@ class _LoginScreenState extends State<LoginScreen> {
         print(token);
       }
 
-      // Guarda el token o cualquier otro dato necesario
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('token', token);
-
       // Guarda el token y el ID del cliente en la clase DataUser
       DataUser.token = token;
       DataUser.clienteId = clienteID;
 
-      try {
-        // Verify a token with the same SecretKey
-        final jwt = JWT.verify(token, SecretKey('secret_key'));
-
-        print('Payload: ${jwt.payload}');
-      } on JWTExpiredException {
-        print('jwt expired');
-      } on JWTException catch (ex) {
-        print(ex.message); // ex: invalid signature
-      }
+      // // Guarda el token o cualquier otro dato necesario
+      // final SharedPreferences prefs = await SharedPreferences.getInstance();
+      // await prefs.setString('token', token);
+      //
+      //
+      // // Verificamos el token, si su integridad y cifrado son válidas
+      // try {
+      //   // Verify a token with the same SecretKey
+      //   final jwt = JWT.verify(token, SecretKey('zurita'));
+      //
+      //   print('Payload: ${jwt.payload}');
+      // } on JWTExpiredException {
+      //   print('jwt expired');
+      // } on JWTException catch (ex) {
+      //   print(ex.message); // ex: invalid signature
+      // }
 
       // Navega a la pantalla principal
       Navigator.pushReplacement(

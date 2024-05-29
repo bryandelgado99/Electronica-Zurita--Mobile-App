@@ -1,29 +1,7 @@
 import 'package:electronica_zurita/app/components/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/link.dart';
-
-// Definición de la clase Equipo
-class Equipo {
-  final String orden_trabajo;
-  final String modelo;
-  final String numeroSerie;
-  final String marca;
-  final String fechaIngreso;
-  final String tipoServicio;
-  String estadoServicio;  // Cambiado para permitir la actualización del estado
-  final String observaciones;
-
-  Equipo({
-    required this.orden_trabajo,
-    required this.modelo,
-    required this.numeroSerie,
-    required this.marca,
-    required this.tipoServicio,
-    required this.fechaIngreso,
-    required this.estadoServicio,
-    required this.observaciones,
-  });
-}
+import '../../models/Equipo.dart';
 
 // Definición de la clase Componente
 class Componente {
@@ -46,6 +24,143 @@ class EquipoCard extends StatefulWidget {
 }
 
 class _EquipoCardState extends State<EquipoCard> {
+
+  @override
+  Widget build(BuildContext context) {
+    Color textColor;
+
+    // Establecer el color del texto según el estado del servicio
+    switch (widget.equipo.estadoServicio) {
+      case 'Pendiente':
+        textColor = AppColors.secondaryColor;
+        break;
+      case 'En proceso':
+        textColor = AppColors.primaryColor;
+        break;
+      case 'Finalizado':
+        textColor = AppColors.accentColor;
+        break;
+      default:
+        textColor = Colors.black; // Color por defecto
+        break;
+    }
+
+    return Card(
+      margin: const EdgeInsets.all(10),
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  'Orden Nro. ${widget.equipo.orden_trabajo}',
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primaryColor),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Modelo: ${widget.equipo.modelo}',
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Número de Serie: ${widget.equipo.numeroSerie}',
+              style: const TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Marca: ${widget.equipo.marca}',
+              style: const TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Fecha de ingreso: ${widget.equipo.fechaIngreso}',
+              style: const TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                const Text(
+                  'Tipo de Servicio: ',
+                  style: TextStyle(fontSize: 16), // Estilo de la etiqueta
+                ),
+                Text(
+                  widget.equipo.tipoServicio,
+                  style: const TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w600), // Solo el texto del estado cambia de color
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                const Text(
+                  'Estado del Servicio: ',
+                  style: TextStyle(fontSize: 16), // Estilo de la etiqueta
+                ),
+                Text(
+                  widget.equipo.estadoServicio,
+                  style: TextStyle(fontSize: 16, color: textColor, fontWeight: FontWeight.w600), // Solo el texto del estado cambia de color
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Observaciones: ${widget.equipo.observaciones}',
+              style: const TextStyle(fontSize: 16),
+            ),
+            if (widget.equipo.tipoServicio == 'Reparación' && widget.equipo.estadoServicio == 'Pendiente') ...[
+              const SizedBox(height: 20),
+              Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: AppColors.contrastColor,
+                  ),
+                  onPressed: () {
+                    _mostrarProforma(context, widget.equipo, widget.componentes);
+                  },
+                  child: const Text('Mostrar proforma'),
+                ),
+              ),
+            ] else if (widget.equipo.tipoServicio == 'Reparación' && widget.equipo.estadoServicio == 'En proceso') ...[
+              const SizedBox(height: 20),
+              Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Row(
+                        children: [
+                          Icon(Icons.check_circle, color: AppColors.accentColor),
+                          SizedBox(width: 10,),
+                          Text("Proforma Aceptada", textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w600),),
+                        ],
+                      ),
+                      ElevatedButton(
+                          style: const ButtonStyle(
+                            foregroundColor: MaterialStatePropertyAll(Colors.white),
+                            backgroundColor: MaterialStatePropertyAll(AppColors.primaryColor),
+                          ),
+                          onPressed: (){
+                            _showModalProform(context, widget.equipo, widget.componentes);
+                          },
+                          child: const Icon(Icons.newspaper_outlined)
+                      )
+                    ],
+                  )
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
   void _aceptarProforma() {
     setState(() {
       widget.equipo.estadoServicio = 'En proceso';
@@ -270,142 +385,6 @@ class _EquipoCardState extends State<EquipoCard> {
     );
   }
 
-
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  @override
-  Widget build(BuildContext context) {
-    Color textColor;
 
-    // Establecer el color del texto según el estado del servicio
-    switch (widget.equipo.estadoServicio) {
-      case 'Pendiente':
-        textColor = AppColors.secondaryColor;
-        break;
-      case 'En proceso':
-        textColor = AppColors.primaryColor;
-        break;
-      case 'Finalizado':
-        textColor = AppColors.accentColor;
-        break;
-      default:
-        textColor = Colors.black; // Color por defecto
-        break;
-    }
-
-    return Card(
-      margin: const EdgeInsets.all(10),
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  'Orden Nro. ${widget.equipo.orden_trabajo}',
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primaryColor),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Modelo: ${widget.equipo.modelo}',
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Número de Serie: ${widget.equipo.numeroSerie}',
-              style: const TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Marca: ${widget.equipo.marca}',
-              style: const TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Fecha de ingreso: ${widget.equipo.fechaIngreso}',
-              style: const TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                const Text(
-                  'Tipo de Servicio: ',
-                  style: TextStyle(fontSize: 16), // Estilo de la etiqueta
-                ),
-                Text(
-                  widget.equipo.tipoServicio,
-                  style: const TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w600), // Solo el texto del estado cambia de color
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                const Text(
-                  'Estado del Servicio: ',
-                  style: TextStyle(fontSize: 16), // Estilo de la etiqueta
-                ),
-                Text(
-                  widget.equipo.estadoServicio,
-                  style: TextStyle(fontSize: 16, color: textColor, fontWeight: FontWeight.w600), // Solo el texto del estado cambia de color
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Observaciones: ${widget.equipo.observaciones}',
-              style: const TextStyle(fontSize: 16),
-            ),
-            if (widget.equipo.tipoServicio == 'Reparación' && widget.equipo.estadoServicio == 'Pendiente') ...[
-              const SizedBox(height: 20),
-              Center(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: AppColors.contrastColor,
-                  ),
-                  onPressed: () {
-                    _mostrarProforma(context, widget.equipo, widget.componentes);
-                  },
-                  child: const Text('Mostrar proforma'),
-                ),
-              ),
-            ] else if (widget.equipo.tipoServicio == 'Reparación' && widget.equipo.estadoServicio == 'En proceso') ...[
-              const SizedBox(height: 20),
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Row(
-                      children: [
-                        Icon(Icons.check_circle, color: AppColors.accentColor),
-                        SizedBox(width: 10,),
-                        Text("Proforma Aceptada", textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w600),),
-                      ],
-                    ),
-                    ElevatedButton(
-                        style: const ButtonStyle(
-                          foregroundColor: WidgetStatePropertyAll(Colors.white),
-                          backgroundColor: WidgetStatePropertyAll(AppColors.primaryColor),
-                        ),
-                        onPressed: (){
-                          _showModalProform(context, widget.equipo, widget.componentes);
-                        },
-                        child: const Icon(Icons.newspaper_outlined)
-                    )
-                  ],
-                )
-              ),
-            ],
-          ],
-        ),
-      ),
-    );
-  }
 }
