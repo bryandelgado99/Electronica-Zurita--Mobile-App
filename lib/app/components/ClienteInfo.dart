@@ -7,15 +7,17 @@ class ClienteInfo extends StatelessWidget {
   final String direccionCliente;
   final String telefonoCliente;
   final String correoCliente;
+  final bool frecuente;
 
   const ClienteInfo({
-    super.key,
+    Key? key,
     required this.nombreCliente,
     required this.cedulaCliente,
     required this.direccionCliente,
     required this.telefonoCliente,
     required this.correoCliente,
-  });
+    required this.frecuente,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class ClienteInfo extends StatelessWidget {
           _buildClienteDetail('Dirección:', direccionCliente),
           _buildClienteDetail('Teléfono:', telefonoCliente),
           _buildClienteDetail('Correo electrónico:', correoCliente),
+          _buildClienteDetail('Frecuente:', frecuente ? "Sí" : "No"),
         ],
       ),
     );
@@ -53,12 +56,13 @@ class ClienteInfo extends StatelessWidget {
                   fontSize: 16,
                 ),
               ),
+              const SizedBox(height: 5,),
               Text(
                 value,
                 style: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.normal,
-                  fontSize: 15,
+                  fontSize: 14,
                 ),
               ),
             ],

@@ -104,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         children: [
                                           // Cédula o RUC
                                           TextFormField(
-                                            keyboardType: TextInputType.emailAddress,
+                                            keyboardType: TextInputType.number,
                                             focusNode: rucFocusNode,
                                             textInputAction: TextInputAction.next,
                                             onFieldSubmitted: (value) {
@@ -113,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             style: const TextStyle(color: Colors.white),
                                             controller: rucController,
                                             decoration: const InputDecoration(
-                                              labelText: "Correo electrónico",
+                                              labelText: "Cédula o RUC",
                                               hintStyle: TextStyle(color: Colors.white),
                                               labelStyle: TextStyle(color: Colors.white),
                                               enabledBorder: OutlineInputBorder(
@@ -226,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void _iniciarSesion() async {
     await EasyLoading.show(status: 'Iniciando Sesión...');
 
-    final String correo = rucController.text;
+    final String cedula = rucController.text;
     final String password = passwordController.text;
 
     final response = await http.post(
@@ -235,7 +235,7 @@ class _LoginScreenState extends State<LoginScreen> {
         'Content-Type': 'application/json',
       },
       body: jsonEncode({
-        'correo': correo,
+        'cedula': cedula,
         'password': password,
       }),
     );
@@ -245,37 +245,49 @@ class _LoginScreenState extends State<LoginScreen> {
     if (response.statusCode == 200) {
       final responseBody = jsonDecode(response.body);
       //Extrae el ID del cliente de la respuesta
-      final String name = responseBody['nombre'];
-      //final String clienteID = idObject.toString();
-      print(name);
-
-      if (kDebugMode) {
-        print("Sesión iniciada");
-      }
+      final dynamic idObject = responseBody['_id'];
+      final String clienteID = idObject.toString();
 
       // Genera un nuevo JWT siempre
       final jwt = JWT(
         {
-          'correo': correo, // Puedes agregar más datos aquí según sea necesario
+          'cedula': cedula, // Puedes agregar más datos aquí según sea necesario
           'rol': 'cliente',
         },
       );
 
-      // Firma y genera el token
+      // Firma y genera el token con la misma clave secreta que se usará para la verificación
       final token = jwt.sign(SecretKey('secret_key')); // Usa tu clave secreta aquí
-      print(token);
-      // Guarda el token y el ID del cliente en la clase DataUser
-      //DataUser.token = token;
-      //DataUser.clienteId = clienteID;
+
+      if (kDebugMode) {
+        print("Sesión iniciada");
+        print(clienteID);
+        print(token);
+      }
 
       // Guarda el token o cualquier otro dato necesario
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', token);
 
+      // Guarda el token y el ID del cliente en la clase DataUser
+      DataUser.token = token;
+      DataUser.clienteId = clienteID;
+
+      try {
+        // Verify a token with the same SecretKey
+        final jwt = JWT.verify(token, SecretKey('secret_key'));
+
+        print('Payload: ${jwt.payload}');
+      } on JWTExpiredException {
+        print('jwt expired');
+      } on JWTException catch (ex) {
+        print(ex.message); // ex: invalid signature
+      }
+
       // Navega a la pantalla principal
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => homeScreen()),
+        MaterialPageRoute(builder: (context) => const homeScreen()),
       );
     } else {
       // Maneja los errores de inicio de sesión mostrando un AlertDialog

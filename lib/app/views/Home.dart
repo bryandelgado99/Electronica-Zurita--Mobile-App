@@ -1,7 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:electronica_zurita/app/views/pages/listPage.dart';
-import 'package:electronica_zurita/app/views/pages/profilePage.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:electronica_zurita/app/views/pages/profileUser.dart';
+import 'package:electronica_zurita/models/dataUser.dart';
 import 'package:flutter/material.dart';
 import '../components/app_colors.dart';
 
@@ -13,40 +13,39 @@ class homeScreen extends StatefulWidget {
 }
 
 class _homeScreenState extends State<homeScreen> {
-
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   int selectedPage = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        bottomNavigationBar: buildNavBottom(),
-        body: Column(
-         children: [
-            buildPageView(),
-         ],
-        ),
+      resizeToAvoidBottomInset: false,
+      bottomNavigationBar: buildNavBottom(),
+      body: Column(
+        children: [
+          buildPageView(),
+        ],
+      ),
     );
   }
 
-  Widget buildPageView(){
+  Widget buildPageView() {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.90,
       child: PageView(
         controller: _pageController,
-        children: const [
-          listPage(),
-          profilePage()
+        children: [
+          const listPage(),
+          profilePage(token: DataUser.token), // Pasar el token a profilePage
         ],
-        onPageChanged: (index){
+        onPageChanged: (index) {
           onpageChanged(index);
         },
       ),
     );
   }
 
-  Widget buildNavBottom(){
+  Widget buildNavBottom() {
     return CurvedNavigationBar(
       index: selectedPage,
       backgroundColor: Colors.transparent,
@@ -54,19 +53,17 @@ class _homeScreenState extends State<homeScreen> {
       color: AppColors.contrastColor,
       items: const [
         Icon(Icons.list_alt_rounded, color: AppColors.bgColor),
-        Icon(Icons.person_rounded, color: AppColors.bgColor)
+        Icon(Icons.person_rounded, color: AppColors.bgColor),
       ],
-      onTap: (int index){
+      onTap: (int index) {
         _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
       },
     );
   }
 
-  onpageChanged(int index){
+  void onpageChanged(int index) {
     setState(() {
       selectedPage = index;
     });
   }
-
 }
-
