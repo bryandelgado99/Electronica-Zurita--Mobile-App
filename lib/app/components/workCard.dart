@@ -30,7 +30,7 @@ class _EquipoCardState extends State<EquipoCard> {
     Color textColor;
 
     // Establecer el color del texto según el estado del servicio
-    switch (widget.equipo.estadoServicio) {
+    switch (widget.equipo.estado) {
       case 'Pendiente':
         textColor = AppColors.secondaryColor;
         break;
@@ -57,7 +57,7 @@ class _EquipoCardState extends State<EquipoCard> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  'Orden Nro. ${widget.equipo.orden_trabajo}',
+                  'Orden Nro. ${widget.equipo.numOrden}',
                   style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primaryColor),
                 ),
               ],
@@ -69,7 +69,7 @@ class _EquipoCardState extends State<EquipoCard> {
             ),
             const SizedBox(height: 8),
             Text(
-              'Número de Serie: ${widget.equipo.numeroSerie}',
+              'Número de Serie: ${widget.equipo.serie}',
               style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 8),
@@ -79,7 +79,7 @@ class _EquipoCardState extends State<EquipoCard> {
             ),
             const SizedBox(height: 8),
             Text(
-              'Fecha de ingreso: ${widget.equipo.fechaIngreso}',
+              'Fecha de ingreso: ${widget.equipo.ingreso}',
               style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 8),
@@ -90,7 +90,7 @@ class _EquipoCardState extends State<EquipoCard> {
                   style: TextStyle(fontSize: 16), // Estilo de la etiqueta
                 ),
                 Text(
-                  widget.equipo.tipoServicio,
+                  widget.equipo.servicio,
                   style: const TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w600), // Solo el texto del estado cambia de color
                 ),
               ],
@@ -103,17 +103,17 @@ class _EquipoCardState extends State<EquipoCard> {
                   style: TextStyle(fontSize: 16), // Estilo de la etiqueta
                 ),
                 Text(
-                  widget.equipo.estadoServicio,
+                  widget.equipo.estado,
                   style: TextStyle(fontSize: 16, color: textColor, fontWeight: FontWeight.w600), // Solo el texto del estado cambia de color
                 ),
               ],
             ),
             const SizedBox(height: 8),
             Text(
-              'Observaciones: ${widget.equipo.observaciones}',
+              'Observaciones: ${widget.equipo.razon}',
               style: const TextStyle(fontSize: 16),
             ),
-            if (widget.equipo.tipoServicio == 'Reparación' && widget.equipo.estadoServicio == 'Pendiente') ...[
+            if (widget.equipo.servicio == 'Reparación' && widget.equipo.servicio == 'Pendiente') ...[
               const SizedBox(height: 20),
               Center(
                 child: ElevatedButton(
@@ -127,7 +127,7 @@ class _EquipoCardState extends State<EquipoCard> {
                   child: const Text('Mostrar proforma'),
                 ),
               ),
-            ] else if (widget.equipo.tipoServicio == 'Reparación' && widget.equipo.estadoServicio == 'En proceso') ...[
+            ] else if (widget.equipo.servicio == 'Reparación' && widget.equipo.estado == 'En proceso') ...[
               const SizedBox(height: 20),
               Center(
                   child: Row(
@@ -143,8 +143,8 @@ class _EquipoCardState extends State<EquipoCard> {
                       ),
                       ElevatedButton(
                           style: const ButtonStyle(
-                            foregroundColor: MaterialStatePropertyAll(Colors.white),
-                            backgroundColor: MaterialStatePropertyAll(AppColors.primaryColor),
+                            foregroundColor: WidgetStatePropertyAll(Colors.white),
+                            backgroundColor: WidgetStatePropertyAll(AppColors.primaryColor),
                           ),
                           onPressed: (){
                             _showModalProform(context, widget.equipo, widget.componentes);
@@ -163,7 +163,7 @@ class _EquipoCardState extends State<EquipoCard> {
 
   void _aceptarProforma() {
     setState(() {
-      widget.equipo.estadoServicio = 'En proceso';
+      widget.equipo.estado = 'En proceso';
     });
   }
 
@@ -237,7 +237,7 @@ class _EquipoCardState extends State<EquipoCard> {
                 children: [
                   Center(
                     child: Text(
-                      'Orden Nro. ${equipo.orden_trabajo}',
+                      'Orden Nro. ${equipo.numOrden}',
                       style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                     ),
                   ),
@@ -248,7 +248,7 @@ class _EquipoCardState extends State<EquipoCard> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Observaciones: ${equipo.observaciones}',
+                    'Observaciones: ${equipo.razon}',
                     style: const TextStyle(fontSize: 16, color: Colors.white),
                   ),
                   const SizedBox(height: 20),
@@ -333,14 +333,14 @@ class _EquipoCardState extends State<EquipoCard> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Orden Nro. ${equipo.orden_trabajo}'),
+          title: Text('Orden Nro. ${equipo.numOrden}'),
           content: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Modelo: ${equipo.modelo}'),
                 const SizedBox(height: 10),
-                Text('Observaciones: ${equipo.observaciones}'),
+                Text('Observaciones: ${equipo.razon}'),
                 const SizedBox(height: 20),
                 const Text('Repuestos:', style: TextStyle(fontWeight: FontWeight.bold),
                 ),
@@ -377,7 +377,7 @@ class _EquipoCardState extends State<EquipoCard> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("Cerrar"),
+              child: const Text("Cerrar"),
             ),
           ],
         );
@@ -386,5 +386,4 @@ class _EquipoCardState extends State<EquipoCard> {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 }
