@@ -8,69 +8,6 @@ import '../../models/equiposProvider.dart';
 import '../components/app_colors.dart';
 import '../components/workCard.dart';
 
-// class homeScreen extends StatefulWidget {
-//   const homeScreen({super.key});
-//
-//   @override
-//   State<homeScreen> createState() => _homeScreenState();
-// }
-//
-// class _homeScreenState extends State<homeScreen> {
-//   final PageController _pageController = PageController();
-//   int selectedPage = 0;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       resizeToAvoidBottomInset: false,
-//       bottomNavigationBar: buildNavBottom(),
-//       body: Column(
-//         children: [
-//           buildPageView(),
-//         ],
-//       ),
-//     );
-//   }
-//
-//   Widget buildPageView() {
-//     return SizedBox(
-//       height: MediaQuery.of(context).size.height * 0.90,
-//       child: PageView(
-//         controller: _pageController,
-//         children: [
-//           EquipoList(equipos: equipos, componentesEjemplo: componentesEjemplo, estado: estado),
-//           profilePage(token: DataUser.token), // Pasar el token a profilePage
-//         ],
-//         onPageChanged: (index) {
-//           onpageChanged(index);
-//         },
-//       ),
-//     );
-//   }
-//
-//   Widget buildNavBottom() {
-//     return CurvedNavigationBar(
-//       index: selectedPage,
-//       backgroundColor: Colors.transparent,
-//       buttonBackgroundColor: AppColors.contrastColor,
-//       color: AppColors.contrastColor,
-//       items: const [
-//         Icon(Icons.list_alt_rounded, color: AppColors.bgColor),
-//         Icon(Icons.person_rounded, color: AppColors.bgColor),
-//       ],
-//       onTap: (int index) {
-//         _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
-//       },
-//     );
-//   }
-//
-//   void onpageChanged(int index) {
-//     setState(() {
-//       selectedPage = index;
-//     });
-//   }
-// }
-
 class homeScreen extends StatefulWidget {
   const homeScreen({super.key});
 
