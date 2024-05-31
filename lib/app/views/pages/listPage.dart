@@ -1,18 +1,10 @@
-import 'dart:math';
 import 'package:electronica_zurita/app/components/app_colors.dart';
-import 'package:electronica_zurita/models/dataUser.dart';
-//import 'package:electronica_zurita/services/notification.services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:social_media_buttons/social_media_buttons.dart';
-import 'package:url_launcher/link.dart';
-import '../../../models/Equipo.dart';
 import '../../../models/equiposProvider.dart';
-import '../../components/emptyView.dart';
+import '../../components/decorations/svgImage.dart';
 import '../../components/headerPartials.dart';
 import '../../components/workCard.dart';
-import 'package:grouped_list/grouped_list.dart';
-import 'package:intl/intl.dart';
 
 class listPage extends StatefulWidget {
   const listPage({super.key});
@@ -22,17 +14,17 @@ class listPage extends StatefulWidget {
 }
 
 class _listPageState extends State<listPage> with AutomaticKeepAliveClientMixin<listPage> {
-  final componentesEjemplo = [
+  final List<String> estados = ['Pendiente', 'En proceso', 'Finalizado'];
+  final List<String> tiposServicio = ['Mantenimiento', 'Reparación', 'Revisión'];
+  final List<IconData> iconos = [Icons.pending, Icons.work, Icons.check_circle];
+  final List<Componente> componentesEjemplo = [
     Componente(nombre: 'Pantalla', precio: 150.0),
     Componente(nombre: 'Batería', precio: 50.0),
     Componente(nombre: 'Cargador', precio: 25.0),
   ];
 
-  final List<String> marcas = ['Marca A', 'Marca B', 'Marca C'];
-  final List<String> tiposServicio = ['Reparación', 'Mantenimiento', 'Revisión'];
-  final List<String> estados = ['Pendiente', 'En proceso', 'Finalizado'];
-  final List<IconData> iconos = [Icons.pending, Icons.work, Icons.check_circle];
-  int selectedIndex = 0;
+  String? selectedTipoServicio;
+  String? selectedEstado;
 
   @override
   void initState() {
@@ -40,78 +32,119 @@ class _listPageState extends State<listPage> with AutomaticKeepAliveClientMixin<
     Provider.of<EquipoProvider>(context, listen: false).fetchEquipos();
   }
 
-@override
-Widget build(BuildContext context) {
-  super.build(context); // Llamar a super.build para mantener el estado
+  @override
+  Widget build(BuildContext context) {
+    super.build(context); // Llamar a super.build para mantener el estado
 
-  final equipoProvider = Provider.of<EquipoProvider>(context);
-  List<Equipo> equiposFiltrados = equipoProvider.equipos.where((equipo) => equipo.estado == estados[selectedIndex]).toList();
+    final equipoProvider = Provider.of<EquipoProvider>(context);
+    final equiposFiltrados = equipoProvider.equipos.where((equipo) {
+      final matchesEstado = selectedEstado?.toLowerCase() == null || equipo.estado == selectedEstado?.toLowerCase();
+      return matchesEstado;
+    }).toList();
 
-  return Scaffold(
-    body: Column(
-      children: [
-        const headerPartials(titleHeader: "Tus Equipos"),
-        buildSegmentedControl(equipoProvider),
-        Expanded(
-          child: equipoProvider.isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : equiposFiltrados.isEmpty
-              ? const emptyView()
-              : Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: GroupedListView<Equipo, String>(
-              elements: equiposFiltrados,
-              groupBy: (equipo) => equipo.servicio,
-              groupSeparatorBuilder: (String groupByValue) => Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  groupByValue,
-                  textAlign: TextAlign.right,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                ),
+    return Scaffold(
+      body: Column(
+        children: [
+          const headerPartials(titleHeader: "Tus Equipos"),
+          Expanded(
+            child: equipoProvider.isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : equiposFiltrados.isEmpty
+                ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const svgImage(
+                    asset_url: "assets/vectors/undraw_no_data_re_kwbl.svg",
+                    semantic_label: 'Empty List',
+                    width: 100,
+                  ),
+                  const SizedBox(height: 15),
+                  Text('No tienes equipos ${selectedEstado}', textAlign: TextAlign.center),
+                ],
               ),
-              itemBuilder: (context, equipo) => EquipoCard(equipo: equipo, componentes: componentesEjemplo),
-              order: GroupedListOrder.ASC,
+            )
+                : ListView.builder(
+              itemCount: equiposFiltrados.length,
+              itemBuilder: (context, index) {
+                final equipo = equiposFiltrados[index];
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (index == 0 || equipo.servicio != equiposFiltrados[index - 1].servicio) // Mostrar encabezado si es el primer elemento o si el servicio es diferente al anterior
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                        child: Text(
+                          equipo.servicio.toUpperCase(), // Mostrar el tipo de servicio como encabezado de la sección
+                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.contrastColor),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    EquipoCard(
+                      equipo: equipo,
+                      componentes: componentesEjemplo,
+                    ),
+                  ],
+                );
+              },
             ),
           ),
-        ),
-      ],
-    ),
-    //floatingActionButton: _testNotificationbtn(),
-  );
-}
-
-  Widget buildSegmentedControl(EquipoProvider equipoProvider) {
-    return Padding(
-      padding: const EdgeInsets.all(5.0),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          double buttonWidth = (constraints.maxWidth / estados.length) - 4;
-
-          return ToggleButtons(
-            isSelected: List.generate(estados.length, (index) => index == equipoProvider.selectedIndex),
-            onPressed: (index) {
-              equipoProvider.setSelectedIndex(index);
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return _buildFilterSheet();
             },
-            borderRadius: BorderRadius.circular(25),
-            constraints: BoxConstraints.tightFor(width: buttonWidth),
-            children: List.generate(estados.length, (index) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(iconos[index], size: 18),
-                  const SizedBox(width: 4),
-                  Flexible(
-                    child: Text(
-                      estados[index],
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              );
-            }),
           );
         },
+        backgroundColor: AppColors.contrastColor,
+        foregroundColor: Colors.white,
+        child: const Icon(Icons.filter_list_outlined),
+      ),
+    );
+  }
+
+
+  Widget _buildFilterSheet() {
+    // Agregamos "Todos" al principio de la lista de estados
+    final List<String> estadosConTodos = ['Todos', ...estados];
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text('Filtrar por', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+          const SizedBox(height: 16),
+          DropdownButtonFormField<String>(
+            decoration: const InputDecoration(labelText: 'Estado del Servicio', labelStyle: TextStyle(color: Colors.white70)),
+            value: selectedEstado,
+            items: estadosConTodos.map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value, style: const TextStyle(color: Colors.black),),
+              );
+            }).toList(),
+            onChanged: (value) {
+              setState(() {
+                // Si se selecciona "Todos", establecemos selectedEstado en null
+                selectedEstado = value == 'Todos' ? null : value;
+              });
+            },
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () {
+              // Aplicamos el filtro
+              Navigator.pop(context);
+            },
+            child: const Text('Aplicar Filtros'),
+          ),
+        ],
       ),
     );
   }

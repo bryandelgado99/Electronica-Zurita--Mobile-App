@@ -33,7 +33,8 @@ class EquipoProvider with ChangeNotifier {
   Future<void> fetchEquipos() async {
     final String token = DataUser.token;
 
-    const String url = '$backend_URL/ordenes/listar'; // Reemplaza con tu URL del backend
+    const String url = '${backend_URL}ordenes/listar';
+    print(url);// Reemplaza con tu URL del backend
 
     try {
       final response = await http.get(

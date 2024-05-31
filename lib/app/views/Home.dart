@@ -118,9 +118,7 @@ class _homeScreenState extends State<homeScreen> {
       child: PageView(
         controller: _pageController,
         children: [
-          equipoProvider.isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : EquipoListWidget(equipos: equipoProvider.equipos), // Modificación aquí
+          const listPage(), // Modificación aquí
           profilePage(token: DataUser.token), // Pasar el token a profilePage
         ],
         onPageChanged: (index) {
