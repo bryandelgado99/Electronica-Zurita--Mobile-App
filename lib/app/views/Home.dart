@@ -1,5 +1,4 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:electronica_zurita/app/components/equipoList.dart';
 import 'package:electronica_zurita/app/views/pages/listPage.dart';
 import 'package:electronica_zurita/app/views/pages/profileUser.dart';
 import 'package:electronica_zurita/models/dataUser.dart';
@@ -110,9 +109,6 @@ class _homeScreenState extends State<homeScreen> {
   }
 
   Widget buildPageView(EquipoProvider equipoProvider) {
-    final estados = ['Pendiente', 'En proceso', 'Finalizado'];
-    final String estado = estados[selectedPage];
-
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.90,
       child: PageView(
