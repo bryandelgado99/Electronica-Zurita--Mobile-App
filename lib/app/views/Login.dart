@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:social_media_buttons/social_media_buttons.dart';
 import '../../models/dataUser.dart';
 import '../components/RestaurarPwsd.dart';
 import '../components/app_colors.dart';
@@ -16,6 +15,7 @@ import '../components/decorations/svgImage.dart';
 import '../components/decorations/textBtn.dart';
 import '../components/decorations/titleHome.dart';
 import '../../utilities/constants.dart';
+import 'package:url_launcher/link.dart';
 
 // Define tus colores y otros widgets personalizados aquí
 
@@ -67,12 +67,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Column(
                         children: [
                           const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 25, horizontal: 20),
+                            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                             child: Column(
                               children: [
                                 titleHome(color_text: Colors.black),
                                 SizedBox(height: 10,),
-                                svgImage(asset_url: 'assets/vectors/electrician.svg', semantic_label: 'Pana', width: 300),
+                                svgImage(asset_url: 'assets/vectors/electrician.svg', semantic_label: 'Pana', width: 290),
                                 SizedBox(height: 10,),
                                 cardComposse(
                                     color: AppColors.contrastColor,
@@ -83,7 +83,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                     fontWeight: FontWeight.w400,
                                     textAlign: TextAlign.center
                                 ),
-                                SizedBox(height: 20,),
                               ],
                             ),
                           ),
@@ -201,7 +200,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                             font_color: AppColors.bgColor,
                                             color_icon: AppColors.bgColor,
                                           ),
-                                          const SizedBox(height: 10,),
+                                          const SizedBox(height: 5,),
+                                          Center(child: whatsAppWork())
                                         ],
                                       ),
                                     )
@@ -249,43 +249,9 @@ class _LoginScreenState extends State<LoginScreen> {
       final String clienteID = idObject.toString();
       final String token = responseBody['token'];
 
-      // // Genera un nuevo JWT siempre
-      // final jwt = JWT(
-      //   {
-      //     'id': clienteID,
-      //     'rol': 'cliente',
-      //   },
-      // );
-
-      // // Firma y genera el token con la misma clave secreta que se usará para la verificación
-      // final token = jwt.sign(SecretKey('zurita')); // Usa tu clave secreta aquí
-
-      if (kDebugMode) {
-        print("Sesión iniciada");
-        print(clienteID);
-        print(token);
-      }
-
       // Guarda el token y el ID del cliente en la clase DataUser
       DataUser.token = token;
       DataUser.clienteId = clienteID;
-
-      // // Guarda el token o cualquier otro dato necesario
-      // final SharedPreferences prefs = await SharedPreferences.getInstance();
-      // await prefs.setString('token', token);
-      //
-      //
-      // // Verificamos el token, si su integridad y cifrado son válidas
-      // try {
-      //   // Verify a token with the same SecretKey
-      //   final jwt = JWT.verify(token, SecretKey('zurita'));
-      //
-      //   print('Payload: ${jwt.payload}');
-      // } on JWTExpiredException {
-      //   print('jwt expired');
-      // } on JWTException catch (ex) {
-      //   print(ex.message); // ex: invalid signature
-      // }
 
       // Navega a la pantalla principal
       Navigator.pushReplacement(
@@ -336,5 +302,29 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       },
     );
+  }
+
+ Widget whatsAppWork(){
+    const String phoneNumber = '593995603471'; // Reemplaza con el número de teléfono
+    const String message = 'Hola, un gusto saludarte! Quisiera solicitar un trabajo, por favor.'; // Reemplaza con tu mensaje
+    final whatsappUrl = 'https://wa.me/$phoneNumber?text=${Uri.encodeFull(message)}';
+
+    return Link(
+      uri: Uri.parse(whatsappUrl),
+      target: LinkTarget.self,
+      builder: (context, followLink) => TextButton(
+        onPressed: followLink,
+        child: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(SocialMediaIcons.whatsapp, color: Colors.white, size: 15,),
+            SizedBox(width: 10,),
+            Text('¿Necesitas un trabajo?', style: TextStyle(color: Colors.white, fontSize: 12),),
+          ],
+        )
+      ),
+    );
+
   }
 }
