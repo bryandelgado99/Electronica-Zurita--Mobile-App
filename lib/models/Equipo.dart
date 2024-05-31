@@ -23,9 +23,9 @@ class Equipo {
   final String marca;
   final String serie;
   final String color;
-  final DateTime ingreso;
+  final String ingreso;
   final String razon;
-  final DateTime? salida;
+  final String? salida;
   final String servicio;
   late final String estado;
   final Cliente cliente;
@@ -55,9 +55,9 @@ class Equipo {
       marca: json['marca'],
       serie: json['serie'],
       color: json['color'],
-      ingreso: DateTime.parse(json['ingreso']),
+      ingreso: DateTime.parse(json['ingreso']).toString().substring(0, 10),
       razon: json['razon'],
-      salida: json['salida'] != null ? DateTime.parse(json['salida']) : null,
+      salida: json['salida'] != null ? DateTime.parse(json['salida']).toString().substring(0, 10) : null,
       servicio: json['servicio'],
       estado: json['estado'],
       cliente: Cliente.fromJson(json['cliente']),

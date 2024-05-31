@@ -11,7 +11,7 @@ class headerPartials extends StatelessWidget {
     child: Container(
         decoration: const BoxDecoration(
           color: AppColors.contrastColor,
-          borderRadius: BorderRadius.only(bottomRight: Radius.circular(25), bottomLeft: Radius.circular(25))
+          //borderRadius: BorderRadius.only(bottomRight: Radius.circular(25), bottomLeft: Radius.circular(25))
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 18),
