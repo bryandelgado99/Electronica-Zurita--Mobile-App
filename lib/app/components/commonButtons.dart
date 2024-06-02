@@ -1,3 +1,4 @@
+// ignore_for_file: camel_case_types, non_constant_identifier_names, file_names
 import 'package:flutter/material.dart';
 
 class commonButton extends StatelessWidget {
@@ -29,7 +30,7 @@ class commonButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll<Color>(color_btn)
+            backgroundColor: WidgetStatePropertyAll<Color>(color_btn)
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(

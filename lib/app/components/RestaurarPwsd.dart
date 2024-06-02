@@ -2,6 +2,7 @@
 import 'package:electronica_zurita/app/components/commonButtons.dart';
 import 'package:electronica_zurita/app/components/decorations/texts/widgetText.dart';
 import 'package:electronica_zurita/app/components/app_colors.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class RestaurarPwsd extends StatefulWidget {
@@ -76,7 +77,9 @@ class _RestaurarPwsdState extends State<RestaurarPwsd> {
                 text:"Obtener correo",
                 onPressed: (){
                   if (_recpass.currentState!.validate()) {
-                   print("Correo Enviado");
+                   if (kDebugMode) {
+                     print("Correo Enviado");
+                   }
                   }
                 },
                 color_btn: AppColors.bgColor,

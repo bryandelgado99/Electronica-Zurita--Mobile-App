@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api
+
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -136,7 +138,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                             textInputAction: TextInputAction.done,
                                             onFieldSubmitted: (value) {
                                               if (_loginKey.currentState!.validate()) {
-                                                print("Contraseña correcta");
+                                                if (kDebugMode) {
+                                                  print("Contraseña correcta");
+                                                }
                                               }
                                             },
                                             obscureText: !_isPasswordVisible,
@@ -255,12 +259,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
       // Navega a la pantalla principal
       Navigator.pushReplacement(
+        // ignore: use_build_context_synchronously
         context,
         MaterialPageRoute(builder: (context) => const homeScreen()),
       );
     } else {
       // Maneja los errores de inicio de sesión mostrando un AlertDialog
       final responseBody = jsonDecode(response.body);
+      // ignore: use_build_context_synchronously
       _mostrarErrorDialog(context, response.statusCode, responseBody['msg']);
     }
   }
@@ -281,7 +287,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ListTile(
                 title: Column(
                   children: [
-                    Text("${msg}", style: const TextStyle(fontSize: 14)),
+                    Text(msg, style: const TextStyle(fontSize: 14)),
                     const SizedBox(height: 8,),
                     const Text("EL usuario y/o contraseña son incorrectos.", style: TextStyle(fontSize: 14),),
                   ],

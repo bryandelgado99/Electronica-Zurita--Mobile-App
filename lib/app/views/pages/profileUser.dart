@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:electronica_zurita/app/components/commonButtons.dart';
 import 'package:electronica_zurita/app/components/decorations/svgImage.dart';
 import 'package:electronica_zurita/app/components/headerPartials.dart';

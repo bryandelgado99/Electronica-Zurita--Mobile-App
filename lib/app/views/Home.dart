@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:electronica_zurita/app/views/pages/listPage.dart';
 import 'package:electronica_zurita/app/views/pages/profileUser.dart';

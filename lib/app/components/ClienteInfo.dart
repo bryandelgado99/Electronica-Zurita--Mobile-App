@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:electronica_zurita/app/components/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -9,14 +11,17 @@ class ClienteInfo extends StatelessWidget {
   final String correoCliente;
   final bool frecuente;
 
-  const ClienteInfo({
-    required this.nombreCliente,
-    required this.cedulaCliente,
-    required this.direccionCliente,
-    required this.telefonoCliente,
-    required this.correoCliente,
-    required this.frecuente,
-  });
+  const ClienteInfo(
+    {
+      super.key, 
+      required this.nombreCliente,
+      required this.cedulaCliente,
+      required this.direccionCliente,
+      required this.telefonoCliente,
+      required this.correoCliente,
+      required this.frecuente,
+    }
+  );
 
 
   @override

@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:electronica_zurita/app/components/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -61,7 +63,7 @@ class _listPageState extends State<listPage> with AutomaticKeepAliveClientMixin<
                     width: 100,
                   ),
                   const SizedBox(height: 15),
-                  Text('No tienes equipos ${selectedEstado}', textAlign: TextAlign.center),
+                  Text('No tienes equipos $selectedEstado', textAlign: TextAlign.center),
                 ],
               ),
             )

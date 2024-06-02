@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:electronica_zurita/app/components/app_colors.dart';
 import 'package:flutter/material.dart';
 

@@ -34,7 +34,6 @@ class EquipoProvider with ChangeNotifier {
     final String token = DataUser.token;
 
     const String url = '${backend_URL}ordenes/listar';
-    print(url);// Reemplaza con tu URL del backend
 
     try {
       final response = await http.get(
@@ -53,22 +52,14 @@ class EquipoProvider with ChangeNotifier {
             .where((equipo) => equipo.cliente.id == DataUser.clienteId)
             .toList();
 
-        // Imprimir datos obtenidos
-        equiposFiltrados.forEach((equipo) {
-          print('ID: ${equipo.id}, Orden: ${equipo.numOrden}, Equipo: ${equipo.equipo}, Modelo: ${equipo.modelo}, Marca: ${equipo.marca}, Serie: ${equipo.serie}, Color: ${equipo.color}, Ingreso: ${equipo.ingreso}, Razon: ${equipo.razon}, Salida: ${equipo.salida}, Servicio: ${equipo.servicio}, Estado: ${equipo.estado}, Cliente: ${equipo.cliente.id}');
-        });
-
-        setEquipos(equiposFiltrados);
+           setEquipos(equiposFiltrados);
         isLoading = false;
         notifyListeners();
       } else {
-        print('Error: ${response.statusCode}');
-        print('Response body: ${response.body}');
         isLoading = false;
         notifyListeners();
       }
     } catch (e) {
-      print('Error: $e');
       isLoading = false;
       notifyListeners();
     }

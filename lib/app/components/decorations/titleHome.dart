@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, non_constant_identifier_names
+
 import 'package:electronica_zurita/app/components/decorations/texts/widgetText.dart';
 import 'package:flutter/material.dart';
 

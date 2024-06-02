@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 class CustomTextButton extends StatelessWidget {
@@ -7,11 +9,11 @@ class CustomTextButton extends StatelessWidget {
   final double fontSize;
 
   const CustomTextButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.textColor,
     required this.onPressed, required this.fontSize,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

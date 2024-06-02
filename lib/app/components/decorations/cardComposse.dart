@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, camel_case_types, non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 class cardComposse extends StatelessWidget {
