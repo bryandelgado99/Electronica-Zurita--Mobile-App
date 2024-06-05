@@ -34,6 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final FocusNode correoFocusNode = FocusNode();
   final FocusNode passwordFocusNode = FocusNode();
   bool _isPasswordVisible = false;
+  late bool _isLoggingIn = false;
 
   @override
   void dispose() {
@@ -108,6 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             keyboardType: TextInputType.emailAddress,
                                             focusNode: correoFocusNode,
                                             textInputAction: TextInputAction.next,
+                                            enabled: !_isLoggingIn,
                                             onFieldSubmitted: (value) {
                                               FocusScope.of(context).requestFocus(correoFocusNode);
                                             },
@@ -145,6 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             },
                                             obscureText: !_isPasswordVisible,
                                             obscuringCharacter: "*",
+                                            enabled: !_isLoggingIn,
                                             style: const TextStyle(color: Colors.white),
                                             controller: passwordController,
                                             decoration: InputDecoration(
@@ -197,6 +200,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                             text: 'Ingresar',
                                             onPressed: () async {
                                               if (_loginKey.currentState!.validate()) {
+                                                setState(() {
+                                                  _isLoggingIn = true; // Cambia el estado de inicio de sesión
+                                                });
                                                 _iniciarSesion();
                                               }
                                             },
@@ -331,6 +337,5 @@ class _LoginScreenState extends State<LoginScreen> {
         )
       ),
     );
-
   }
 }
