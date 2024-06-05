@@ -1,8 +1,10 @@
 // ignore_for_file: camel_case_types
-
+import 'package:animated_floating_buttons/widgets/animated_floating_action_button.dart';
 import 'package:electronica_zurita/app/components/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:social_media_buttons/social_media_buttons.dart';
+import 'package:url_launcher/link.dart';
 import '../../../models/equiposProvider.dart';
 import '../../components/decorations/svgImage.dart';
 import '../../components/headerPartials.dart';
@@ -16,6 +18,7 @@ class listPage extends StatefulWidget {
 }
 
 class _listPageState extends State<listPage> with AutomaticKeepAliveClientMixin<listPage> {
+  final GlobalKey<AnimatedFloatingActionButtonState> key =GlobalKey<AnimatedFloatingActionButtonState>();
   final List<String> estados = ['Pendiente', 'En proceso', 'Finalizado'];
   final List<String> tiposServicio = ['Mantenimiento', 'Reparación', 'Revisión'];
   final List<IconData> iconos = [Icons.pending, Icons.work, Icons.check_circle];
@@ -40,7 +43,7 @@ class _listPageState extends State<listPage> with AutomaticKeepAliveClientMixin<
 
     final equipoProvider = Provider.of<EquipoProvider>(context);
     final equiposFiltrados = equipoProvider.equipos.where((equipo) {
-      final matchesEstado = selectedEstado?.toLowerCase() == null || equipo.estado == selectedEstado?.toLowerCase();
+      final matchesEstado = selectedEstado == null || equipo.estado == selectedEstado;
       return matchesEstado;
     }).toList();
 
@@ -94,22 +97,35 @@ class _listPageState extends State<listPage> with AutomaticKeepAliveClientMixin<
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (context) {
-              return _buildFilterSheet();
-            },
-          );
-        },
-        backgroundColor: AppColors.contrastColor,
-        foregroundColor: Colors.white,
-        child: const Icon(Icons.filter_list_outlined),
+      floatingActionButton: AnimatedFloatingActionButton(
+        //Fab list
+          fabButtons: <Widget>[
+            filterButton(), whatsAppWork()
+          ],
+          key : key,
+          colorStartAnimation: AppColors.contrastColor,
+          colorEndAnimation: AppColors.secondaryColor,
+          animatedIconData: AnimatedIcons.menu_close
+          //To principal button
       ),
     );
   }
 
+  Widget filterButton(){
+    return FloatingActionButton(
+      onPressed: () {
+        showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return _buildFilterSheet();
+          },
+        );
+      },
+      backgroundColor: AppColors.contrastColor,
+      foregroundColor: Colors.white,
+      child: const Icon(Icons.filter_list_outlined),
+    );
+  }
 
   Widget _buildFilterSheet() {
     // Agregamos "Todos" al principio de la lista de estados
@@ -147,6 +163,25 @@ class _listPageState extends State<listPage> with AutomaticKeepAliveClientMixin<
             child: const Text('Aplicar Filtros'),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget whatsAppWork() {
+    const String phoneNumber = '593995603471'; // Reemplaza con el número de teléfono
+    const String message = 'Hola, un gusto saludarte! Quisiera solicitar un trabajo, por favor.'; // Reemplaza con tu mensaje
+    final whatsappUrl = 'https://wa.me/$phoneNumber?text=${Uri.encodeFull(message)}';
+
+    return Link(
+      uri: Uri.parse(whatsappUrl),
+      target: LinkTarget.self,
+      builder: (context, followLink) => FloatingActionButton(
+        onPressed: followLink,
+        backgroundColor: AppColors.accentColor, // Color de fondo del botón
+        child: const Icon(
+          SocialMediaIcons.whatsapp, // Icono de WhatsApp
+          color: Colors.white,
+        ),
       ),
     );
   }

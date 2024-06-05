@@ -32,7 +32,6 @@ class EquipoProvider with ChangeNotifier {
 
   Future<void> fetchEquipos() async {
     final String token = DataUser.token;
-
     const String url = '${backend_URL}ordenes/listar';
 
     try {
@@ -52,14 +51,16 @@ class EquipoProvider with ChangeNotifier {
             .where((equipo) => equipo.cliente.id == DataUser.clienteId)
             .toList();
 
-           setEquipos(equiposFiltrados);
+        setEquipos(equiposFiltrados);
         isLoading = false;
         notifyListeners();
       } else {
+        // Imprimir el código de estado en caso de error
         isLoading = false;
         notifyListeners();
       }
     } catch (e) {
+      // Imprimir el error en caso de excepción
       isLoading = false;
       notifyListeners();
     }

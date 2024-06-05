@@ -25,6 +25,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.4.1"
+  animated_floating_buttons:
+    dependency: "direct main"
+    description:
+      name: animated_floating_buttons
+      sha256: cd89653ab917fb0d7ab04d5b5d6807c75de3f002de99b10f63fcf3c5c7133d60
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   ansicolor:
     dependency: transitive
     description:
