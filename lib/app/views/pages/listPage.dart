@@ -105,8 +105,7 @@ class _listPageState extends State<listPage> with AutomaticKeepAliveClientMixin<
           key : key,
           colorStartAnimation: AppColors.contrastColor,
           colorEndAnimation: AppColors.secondaryColor,
-          animatedIconData: AnimatedIcons.menu_close
-          //To principal button
+          animatedIconData: AnimatedIcons.menu_close,
       ),
     );
   }
