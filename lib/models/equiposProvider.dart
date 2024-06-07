@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:electronica_zurita/models/Equipo.dart';
 import 'package:electronica_zurita/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 import 'dataUser.dart';
 
 class EquipoProvider with ChangeNotifier {

@@ -1,9 +1,10 @@
 // ignore_for_file: non_constant_identifier_names, library_private_types_in_public_api
-
 import 'package:electronica_zurita/app/components/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/link.dart';
 import '../../models/Equipo.dart';
+import '../../models/proforma/Proforma.dart';
+import 'package:expansion_tile_card/expansion_tile_card.dart';
 
 // Definición de la clase Componente
 class Componente {
@@ -17,9 +18,9 @@ class Componente {
 // Definición del widget EquipoCard
 class EquipoCard extends StatefulWidget {
   final Equipo equipo;
-  final List<Componente> componentes;
+  final List<Piezas> piezas;
 
-  const EquipoCard({super.key, required this.equipo, required this.componentes});
+  const EquipoCard({super.key, required this.equipo, required this.piezas});
 
   @override
   _EquipoCardState createState() => _EquipoCardState();
@@ -47,127 +48,130 @@ class _EquipoCardState extends State<EquipoCard> {
         break;
     }
 
-    return Card(
-      margin: const EdgeInsets.all(10),
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  'Orden Nro. ${widget.equipo.numOrden}',
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primaryColor),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Modelo: ${widget.equipo.modelo}',
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Número de Serie: ${widget.equipo.serie}',
-              style: const TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Marca: ${widget.equipo.marca}',
-              style: const TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Fecha de ingreso: ${widget.equipo.ingreso}',
-              style: const TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                const Text(
-                  'Tipo de Servicio: ',
-                  style: TextStyle(fontSize: 16), // Estilo de la etiqueta
-                ),
-                Text(
-                  widget.equipo.servicio,
-                  style: const TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w600), // Solo el texto del estado cambia de color
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                const Text(
-                  'Estado del Servicio: ',
-                  style: TextStyle(fontSize: 16), // Estilo de la etiqueta
-                ),
-                Text(
-                  widget.equipo.estado,
-                  style: TextStyle(fontSize: 16, color: textColor, fontWeight: FontWeight.w600), // Solo el texto del estado cambia de color
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Observaciones: ${widget.equipo.razon}',
-              style: const TextStyle(fontSize: 16),
-            ),
-            if (widget.equipo.servicio == 'Reparación' && widget.equipo.servicio == 'Pendiente') ...[
-              const SizedBox(height: 20),
-              Center(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: AppColors.contrastColor,
-                  ),
-                  onPressed: () {
-                    _mostrarProforma(context, widget.equipo, widget.componentes);
-                  },
-                  child: const Text('Mostrar proforma'),
-                ),
-              ),
-            ] else if (widget.equipo.servicio == 'Reparación' && widget.equipo.estado == 'En proceso') ...[
-              const SizedBox(height: 20),
-              Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Row(
-                        children: [
-                          Icon(Icons.check_circle, color: AppColors.accentColor),
-                          SizedBox(width: 10,),
-                          Text("Proforma Aceptada", textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w600),),
-                        ],
-                      ),
-                      ElevatedButton(
-                          style: const ButtonStyle(
-                            foregroundColor: WidgetStatePropertyAll(Colors.white),
-                            backgroundColor: WidgetStatePropertyAll(AppColors.primaryColor),
-                          ),
-                          onPressed: (){
-                            _showModalProform(context, widget.equipo, widget.componentes);
-                          },
-                          child: const Icon(Icons.newspaper_outlined)
-                      )
-                    ],
-                  )
-              ),
-            ],
-          ],
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: ExpansionTileCard(
+        leading: const Icon(Icons.miscellaneous_services, color: AppColors.primaryColor),
+        title: Text(
+          'Orden Nro. ${widget.equipo.numOrden}',
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primaryColor),
         ),
+        subtitle: Text('Modelo: ${widget.equipo.modelo}'),
+        children: <Widget>[
+          const Divider(
+            thickness: 1.0,
+            height: 1.0,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'Número de Serie: ${widget.equipo.serie}',
+                  style: const TextStyle(fontSize: 16),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Marca: ${widget.equipo.marca}',
+                  style: const TextStyle(fontSize: 16),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Fecha de ingreso: ${widget.equipo.ingreso}',
+                  style: const TextStyle(fontSize: 16),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    const Text(
+                      'Tipo de Servicio: ',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    Text(
+                      widget.equipo.servicio,
+                      style: const TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    const Text(
+                      'Estado del Servicio: ',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    Text(
+                      widget.equipo.estado,
+                      style: TextStyle(fontSize: 16, color: textColor, fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Observaciones: ${widget.equipo.razon}',
+                  style: const TextStyle(fontSize: 16),
+                ),
+                if (widget.equipo.servicio == 'Reparación' && widget.equipo.estado == 'Pendiente') ...[
+                  const SizedBox(height: 20),
+                  Center(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: AppColors.contrastColor,
+                      ),
+                      onPressed: () {
+                        //_mostrarProforma(context, widget.equipo);
+                      },
+                      child: const Text('Mostrar proforma'),
+                    ),
+                  ),
+                ] else if (widget.equipo.servicio == 'Reparación' && widget.equipo.estado == 'En proceso') ...[
+                  const SizedBox(height: 20),
+                  Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Row(
+                          children: [
+                            Icon(Icons.check_circle, color: AppColors.accentColor),
+                            SizedBox(width: 10),
+                            Text(
+                              "Proforma Aceptada",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                          ],
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: AppColors.primaryColor,
+                          ),
+                          onPressed: () {
+                            //_showModalProform(context, widget.equipo, widget.componentes);
+                          },
+                          child: const Icon(Icons.newspaper_outlined),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
+}
 
-  void _aceptarProforma() {
+  /*void _aceptarProforma() {
     setState(() {
       widget.equipo.estado = 'En proceso';
     });
-  }
+  }*/
 
   void _rechazarProforma(BuildContext context) {
     showDialog(
@@ -213,12 +217,12 @@ class _EquipoCardState extends State<EquipoCard> {
     );
   }
 
-  void _mostrarProforma(BuildContext context, Equipo equipo, List<Componente> componentes) {
+  void _mostrarProforma(BuildContext context, Equipo equipo, List<Piezas> piezas) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        double totalPrecio = componentes.fold(0, (sum, item) => sum + item.precio);
+        double totalPrecio = piezas.fold(0, (sum, item) => sum + item.precio);
 
         return Padding(
           padding: EdgeInsets.only(
@@ -227,7 +231,7 @@ class _EquipoCardState extends State<EquipoCard> {
           child: Container(
             padding: const EdgeInsets.all(20),
             decoration: const BoxDecoration(
-              color: AppColors.contrastColor, // Ajusta el color de fondo del bottom sheet
+              color: Colors.white,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(24),
                 topRight: Radius.circular(24),
@@ -240,23 +244,23 @@ class _EquipoCardState extends State<EquipoCard> {
                   Center(
                     child: Text(
                       'Orden Nro. ${equipo.numOrden}',
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     'Modelo: ${equipo.modelo}',
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     'Observaciones: ${equipo.razon}',
-                    style: const TextStyle(fontSize: 16, color: Colors.white),
+                    style: const TextStyle(fontSize: 16, color: Colors.black),
                   ),
                   const SizedBox(height: 20),
                   const Text(
                     'Repuestos:',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                   ),
                   const SizedBox(height: 20),
                   Container(
@@ -270,10 +274,10 @@ class _EquipoCardState extends State<EquipoCard> {
                         DataColumn(label: Text('Nombre')),
                         DataColumn(label: Text('Precio')),
                       ],
-                      rows: componentes.map((componente) {
+                      rows: piezas.map((pieza) {
                         return DataRow(cells: [
-                          DataCell(Text(componente.nombre)),
-                          DataCell(Text('\$${componente.precio.toStringAsFixed(2)}')),
+                          DataCell(Text(pieza.pieza)),
+                          DataCell(Text('\$${pieza.precio.toStringAsFixed(2)}')),
                         ]);
                       }).toList(),
                     ),
@@ -281,12 +285,12 @@ class _EquipoCardState extends State<EquipoCard> {
                   const SizedBox(height: 20),
                   Text(
                     'Precio Total: \$${totalPrecio.toStringAsFixed(2)}',
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                   ),
                   const SizedBox(height: 30),
                   const Text(
                     '¿Estás de acuerdo con esta proforma?',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 15),
@@ -294,26 +298,25 @@ class _EquipoCardState extends State<EquipoCard> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      // Si acepta proforma
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
-                          backgroundColor: AppColors.accentColor,
+                          backgroundColor: Colors.green,
                         ),
                         onPressed: () {
-                          _aceptarProforma();
+                          // Aceptar proforma
                           Navigator.of(context).pop();
                         },
-                        child: const Text("Si"),
+                        child: const Text("Sí"),
                       ),
-                      // No acepta proforma
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
-                          backgroundColor: AppColors.secondaryColor,
+                          backgroundColor: Colors.red,
                         ),
                         onPressed: () {
-                          _rechazarProforma(context);
+                          // Rechazar proforma
+                          Navigator.of(context).pop();
                         },
                         child: const Text("No"),
                       ),
@@ -328,8 +331,8 @@ class _EquipoCardState extends State<EquipoCard> {
     );
   }
 
-  void _showModalProform(BuildContext context, Equipo equipo, List<Componente> componentes) {
-    double totalPrecio = componentes.fold(0, (sum, item) => sum + item.precio);
+  void _showModalProform(BuildContext context, Equipo equipo, List<Piezas> piezas) {
+    double totalPrecio = piezas.fold(0, (sum, item) => sum + item.precio);
 
     showDialog(
       context: context,
@@ -358,9 +361,9 @@ class _EquipoCardState extends State<EquipoCard> {
                       DataColumn(label: Text('Nombre')),
                       DataColumn(label: Text('Precio')),
                     ],
-                    rows: componentes.map((componente) {
+                    rows: piezas.map((componente) {
                       return DataRow(cells: [
-                        DataCell(Text(componente.nombre)),
+                        DataCell(Text(piezas as String)),
                         DataCell(Text('\$${componente.precio.toStringAsFixed(2)}')),
                       ]);
                     }).toList(),
@@ -383,9 +386,9 @@ class _EquipoCardState extends State<EquipoCard> {
             ),
           ],
         );
-      },
+      }
     );
   }
 
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}

@@ -88,7 +88,7 @@ class _listPageState extends State<listPage> with AutomaticKeepAliveClientMixin<
                       ),
                     EquipoCard(
                       equipo: equipo,
-                      componentes: componentesEjemplo,
+                      piezas: [],
                     ),
                   ],
                 );
@@ -97,7 +97,7 @@ class _listPageState extends State<listPage> with AutomaticKeepAliveClientMixin<
           ),
         ],
       ),
-      floatingActionButton: AnimatedFloatingActionButton(
+      /*floatingActionButton: AnimatedFloatingActionButton(
         //Fab list
           fabButtons: <Widget>[
             filterButton(), whatsAppWork()
@@ -106,7 +106,7 @@ class _listPageState extends State<listPage> with AutomaticKeepAliveClientMixin<
           colorStartAnimation: AppColors.contrastColor,
           colorEndAnimation: AppColors.secondaryColor,
           animatedIconData: AnimatedIcons.menu_close,
-      ),
+      ),*/
     );
   }
 
