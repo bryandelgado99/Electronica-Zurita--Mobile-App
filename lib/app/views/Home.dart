@@ -8,7 +8,6 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
 import '../../models/equiposProvider.dart';
 import '../components/app_colors.dart';
-import '../components/workCard.dart';
 
 class homeScreen extends StatefulWidget{
   const homeScreen({super.key});
@@ -21,11 +20,6 @@ class homeScreen extends StatefulWidget{
 class _homeScreenState extends State<homeScreen>{
   final PageController _pageController = PageController();
   int selectedPage = 0;
-  final List<Componente> componentesEjemplo = [
-    Componente(nombre: 'Pantalla', precio: 150.0),
-    Componente(nombre: 'Batería', precio: 50.0),
-    Componente(nombre: 'Cargador', precio: 25.0),
-  ];
 
   @override
   void initState() {

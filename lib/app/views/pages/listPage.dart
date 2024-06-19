@@ -2,8 +2,8 @@
 import 'package:electronica_zurita/app/components/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../models/Equipo.dart';
 import '../../../models/equiposProvider.dart';
-import '../../components/decorations/svgImage.dart';
 import '../../components/workCard.dart';
 
 class listPage extends StatefulWidget {
@@ -13,15 +13,10 @@ class listPage extends StatefulWidget {
   State<listPage> createState() => _listPageState();
 }
 
-class _listPageState extends State<listPage> with AutomaticKeepAliveClientMixin<listPage> {
+class _listPageState extends State<listPage>
+    with AutomaticKeepAliveClientMixin<listPage> {
   final List<String> estados = ['Pendiente', 'En proceso', 'Finalizado'];
   final List<String> tiposServicio = ['Mantenimiento', 'Reparación', 'Revisión'];
-  final List<IconData> iconos = [Icons.pending, Icons.work, Icons.check_circle];
-  final List<Componente> componentesEjemplo = [
-    Componente(nombre: 'Pantalla', precio: 150.0),
-    Componente(nombre: 'Batería', precio: 50.0),
-    Componente(nombre: 'Cargador', precio: 25.0),
-  ];
 
   String? selectedTipoServicio;
   String? selectedEstado;
@@ -37,117 +32,105 @@ class _listPageState extends State<listPage> with AutomaticKeepAliveClientMixin<
     super.build(context); // Llamar a super.build para mantener el estado
 
     final equipoProvider = Provider.of<EquipoProvider>(context);
-    final equiposFiltrados = equipoProvider.equipos.where((equipo) {
-      final matchesEstado = selectedEstado == null || equipo.estado == selectedEstado;
-      return matchesEstado;
+    final List<Equipo> equipos = equipoProvider.equipos;
+
+    // Filtrar equipos según el estado seleccionado
+    final equiposFiltrados = equipos.where((equipo) {
+      if (selectedEstado == null) return true; // Mostrar todos si no hay estado seleccionado
+      return equipo.estado == selectedEstado;
     }).toList();
+
+    // Verificar si no hay equipos en el estado seleccionado
+    final bool noHayEquipos = equipos.isEmpty;
 
     return Scaffold(
       body: Column(
         children: [
           Expanded(
-            child: equipoProvider.isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : equiposFiltrados.isEmpty
-                ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const svgImage(
-                    asset_url: "assets/vectors/undraw_no_data_re_kwbl.svg",
-                    semantic_label: 'Empty List',
-                    width: 100,
-                  ),
-                  const SizedBox(height: 15),
-                  Text('No tienes equipos $selectedEstado', textAlign: TextAlign.center),
-                ],
-              ),
-            )
-                : ListView.builder(
-              itemCount: equiposFiltrados.length,
-              itemBuilder: (context, index) {
-                final equipo = equiposFiltrados[index];
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            child: RefreshIndicator(
+              onRefresh: () async {
+                await Provider.of<EquipoProvider>(context, listen: false)
+                    .fetchEquipos();
+              },
+              child: equipoProvider.isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : equiposFiltrados.isEmpty
+                  ? const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    if (index == 0 || equipo.servicio != equiposFiltrados[index - 1].servicio) // Mostrar encabezado si es el primer elemento o si el servicio es diferente al anterior
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                        child: Text(
-                          equipo.servicio.toUpperCase(), // Mostrar el tipo de servicio como encabezado de la sección
-                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.contrastColor),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    EquipoCard(
-                      equipo: equipo,
-                      piezas: const [],
+                    SizedBox(height: 50),
+                    Text(
+                      'No tienes ordenes de trabajo para este estado',
+                      textAlign: TextAlign.center,
                     ),
                   ],
+                ),
+              )
+                  : ListView.builder(
+                itemCount: equiposFiltrados.length,
+                itemBuilder: (context, index) {
+                  final equipo = equiposFiltrados[index];
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (index == 0 ||
+                          equipo.servicio !=
+                              equiposFiltrados[index - 1].servicio)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Text(
+                            equipo.servicio.toUpperCase(),
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.contrastColor,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      EquipoCard(
+                        equipo: equipo,
+                        piezas: const [],
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+            child: Wrap(
+              spacing: 10.0,
+              children: estados.map((estado) {
+                return FilterChip(
+                  label: Text(estado),
+                  selected: selectedEstado == estado,
+                  onSelected: (isSelected) {
+                    setState(() {
+                      selectedEstado = isSelected ? estado : null;
+                    });
+                  },
                 );
-              },
+              }).toList(),
             ),
           ),
         ],
       ),
-      floatingActionButton: filterButton()
-    );
-  }
-
-  Widget filterButton(){
-    return FloatingActionButton(
-      onPressed: () {
-        showModalBottomSheet(
-          context: context,
-          builder: (context) {
-            return _buildFilterSheet();
-          },
-        );
-      },
-      backgroundColor: AppColors.contrastColor,
-      foregroundColor: Colors.white,
-      child: const Icon(Icons.filter_list_outlined),
-    );
-  }
-
-  Widget _buildFilterSheet() {
-    // Agregamos "Todos" al principio de la lista de estados
-    final List<String> estadosConTodos = ['Todos', ...estados];
-
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text('Filtrar por', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
-          const SizedBox(height: 16),
-          DropdownButtonFormField<String>(
-            decoration: const InputDecoration(labelText: 'Estado del Servicio', labelStyle: TextStyle(color: Colors.white70)),
-            value: selectedEstado,
-            items: estadosConTodos.map((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value, style: const TextStyle(color: Colors.black),),
-              );
-            }).toList(),
-            onChanged: (value) {
-              setState(() {
-                // Si se selecciona "Todos", establecemos selectedEstado en null
-                selectedEstado = value == 'Todos' ? null : value;
-              });
-            },
-          ),
-          const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () {
-              // Aplicamos el filtro
-              Navigator.pop(context);
-            },
-            child: const Text('Aplicar Filtros'),
-          ),
-        ],
-      ),
+      floatingActionButton: noHayEquipos
+          ? FloatingActionButton(
+        onPressed: () async {
+          await Provider.of<EquipoProvider>(context, listen: false)
+              .fetchEquipos();
+        },
+        backgroundColor: AppColors.primaryColor,
+        foregroundColor: Colors.white,
+        child: const Icon(Icons.refresh),
+      )
+          : null,
     );
   }
 

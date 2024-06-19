@@ -1,4 +1,3 @@
-import 'package:electronica_zurita/services/notification.services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +9,6 @@ import 'models/equiposProvider.dart';
 void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
-  await initNotification();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
