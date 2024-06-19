@@ -1,23 +1,25 @@
 // ignore_for_file: camel_case_types
-
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:electronica_zurita/app/components/headerPartials.dart';
 import 'package:electronica_zurita/app/views/pages/listPage.dart';
 import 'package:electronica_zurita/app/views/pages/profileUser.dart';
 import 'package:electronica_zurita/models/dataUser.dart';
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
 import '../../models/equiposProvider.dart';
 import '../components/app_colors.dart';
 import '../components/workCard.dart';
 
-class homeScreen extends StatefulWidget {
+class homeScreen extends StatefulWidget{
   const homeScreen({super.key});
 
   @override
   State<homeScreen> createState() => _homeScreenState();
+
 }
 
-class _homeScreenState extends State<homeScreen> {
+class _homeScreenState extends State<homeScreen>{
   final PageController _pageController = PageController();
   int selectedPage = 0;
   final List<Componente> componentesEjemplo = [
@@ -37,11 +39,18 @@ class _homeScreenState extends State<homeScreen> {
     final equipoProvider = Provider.of<EquipoProvider>(context);
 
     return Scaffold(
+      extendBody: false,
+      appBar: const headerPartials(),
       resizeToAvoidBottomInset: false,
-      bottomNavigationBar: buildNavBottom(),
+      bottomNavigationBar: googleNavBar(),
       body: Column(
         children: [
-          buildPageView(equipoProvider),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+              child: buildPageView(equipoProvider),
+            ),
+          ),
         ],
       ),
     );
@@ -59,6 +68,38 @@ class _homeScreenState extends State<homeScreen> {
         onPageChanged: (index) {
           onPageChanged(index);
         },
+      ),
+    );
+  }
+
+  Widget defineNavBar(){
+    return const BackButton();
+  }
+
+  Widget googleNavBar(){
+    return Container(
+      decoration: const BoxDecoration(
+        color: AppColors.contrastColor,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20))
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 12),
+        child: GNav(
+          selectedIndex: selectedPage,
+          gap: 10,
+          backgroundColor: AppColors.contrastColor,
+          color: Colors.white54,
+          activeColor: Colors.white,
+          tabBackgroundColor: AppColors.primaryColor,
+          padding: const EdgeInsets.all(15),
+          tabs: const [
+            GButton(icon: Icons.list_alt_rounded, text: "Equipos"),
+            GButton(icon: Icons.person_rounded, text: "Perfil",)
+          ],
+          onTabChange: (int index){
+            _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+          },
+        )
       ),
     );
   }

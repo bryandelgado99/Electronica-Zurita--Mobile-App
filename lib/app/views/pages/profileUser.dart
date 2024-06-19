@@ -1,8 +1,6 @@
 // ignore_for_file: camel_case_types
 
 import 'package:electronica_zurita/app/components/commonButtons.dart';
-import 'package:electronica_zurita/app/components/decorations/svgImage.dart';
-import 'package:electronica_zurita/app/components/headerPartials.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -31,19 +29,16 @@ class _profilePageState extends State<profilePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              const headerPartials(titleHeader: "Perfil"),
-              const SizedBox(height: 30,),
+              const SizedBox(height: 10,),
               Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const svgImage(asset_url: 'assets/vectors/undraw_male_avatar_g98d.svg', semantic_label: 'User', width: 80),
-                    const SizedBox(width: 25,),
                     Center(child: Column(
                       children: [
                         const Text("Bienvenido/a", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),),
-                        Text("${clienteProvider.nombreCliente ?? 'Cargando...'}!", style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),)
+                        Text("${clienteProvider.nombreCliente ?? 'Cargando...'}!", style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 22),)
                       ],
                     )),
                   ],

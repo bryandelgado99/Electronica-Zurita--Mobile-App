@@ -9,14 +9,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "67.0.0"
-  adaptive_number:
-    dependency: transitive
-    description:
-      name: adaptive_number
-      sha256: "3a567544e9b5c9c803006f51140ad544aedc79604fd4f3f2c1380003f97c1d77"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
   analyzer:
     dependency: transitive
     description:
@@ -25,14 +17,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.4.1"
-  animated_floating_buttons:
-    dependency: "direct main"
-    description:
-      name: animated_floating_buttons
-      sha256: cd89653ab917fb0d7ab04d5b5d6807c75de3f002de99b10f63fcf3c5c7133d60
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.2"
   ansicolor:
     dependency: transitive
     description:
@@ -193,14 +177,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
-  curved_navigation_bar:
-    dependency: "direct main"
-    description:
-      name: curved_navigation_bar
-      sha256: "342da2fd038bd7ec8bd0f5948d57c7fde22930b438edc2489e786c1770f68fbd"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.5"
   dart_console:
     dependency: transitive
     description:
@@ -209,14 +185,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  dart_jsonwebtoken:
-    dependency: "direct main"
-    description:
-      name: dart_jsonwebtoken
-      sha256: "346e9a21e4bf6e6a431e19ece00ebb2e3668e1e339cabdf6f46d18d88692a848"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.14.0"
   dart_mappable:
     dependency: transitive
     description:
@@ -249,14 +217,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.10"
-  ed25519_edwards:
-    dependency: transitive
-    description:
-      name: ed25519_edwards
-      sha256: "6ce0112d131327ec6d42beede1e5dfd526069b18ad45dcf654f15074ad9276cd"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.1"
   equatable:
     dependency: transitive
     description:
@@ -456,6 +416,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  google_nav_bar:
+    dependency: "direct main"
+    description:
+      name: google_nav_bar
+      sha256: "1c8e3882fa66ee7b74c24320668276ca23affbd58f0b14a24c1e5590f4d07ab0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.6"
   grouped_list:
     dependency: "direct main"
     description:
@@ -584,14 +552,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  js:
-    dependency: transitive
-    description:
-      name: js
-      sha256: c1b2e9b5ea78c45e1a0788d29606ba27dc5f71f019f32ca5140f61ef071838cf
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.1"
   json_annotation:
     dependency: transitive
     description:
@@ -776,14 +736,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
-  pointycastle:
-    dependency: transitive
-    description:
-      name: pointycastle
-      sha256: "4be0097fcf3fd3e8449e53730c631200ebc7b88016acecab2b0da2f0149222fe"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.9.1"
   process:
     dependency: transitive
     description:
@@ -901,14 +853,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
-  smooth_page_indicator:
-    dependency: "direct main"
-    description:
-      name: smooth_page_indicator
-      sha256: "725bc638d5e79df0c84658e1291449996943f93bacbc2cec49963dbbab48d8ae"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.0"
   snippet_coder_utils:
     dependency: "direct main"
     description:

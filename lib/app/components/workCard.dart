@@ -1,7 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, library_private_types_in_public_api
 import 'package:electronica_zurita/app/components/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/link.dart';
+//import 'package:url_launcher/link.dart';
 import '../../models/Equipo.dart';
 import '../../models/proforma/Proforma.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
@@ -51,6 +51,7 @@ class _EquipoCardState extends State<EquipoCard> {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: ExpansionTileCard(
+        borderRadius: BorderRadius.circular(25),
         leading: const Icon(Icons.miscellaneous_services, color: AppColors.primaryColor),
         title: Text(
           'Orden Nro. ${widget.equipo.numOrden}',
@@ -165,7 +166,6 @@ class _EquipoCardState extends State<EquipoCard> {
       ),
     );
   }
-}
 
   /*void _aceptarProforma() {
     setState(() {
@@ -173,7 +173,7 @@ class _EquipoCardState extends State<EquipoCard> {
     });
   }*/
 
-  void _rechazarProforma(BuildContext context) {
+  /*void _rechazarProforma(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -215,9 +215,9 @@ class _EquipoCardState extends State<EquipoCard> {
         );
       },
     );
-  }
+  }*/
 
-  void _mostrarProforma(BuildContext context, Equipo equipo, List<Piezas> piezas) {
+  /*void _mostrarProforma(BuildContext context, Equipo equipo, List<Piezas> piezas) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -329,9 +329,9 @@ class _EquipoCardState extends State<EquipoCard> {
         );
       },
     );
-  }
+  }*/
 
-  void _showModalProform(BuildContext context, Equipo equipo, List<Piezas> piezas) {
+  /*void _showModalProform(BuildContext context, Equipo equipo, List<Piezas> piezas) {
     double totalPrecio = piezas.fold(0, (sum, item) => sum + item.precio);
 
     showDialog(
@@ -388,7 +388,6 @@ class _EquipoCardState extends State<EquipoCard> {
         );
       }
     );
-  }
-
-
+  }*/
+}
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

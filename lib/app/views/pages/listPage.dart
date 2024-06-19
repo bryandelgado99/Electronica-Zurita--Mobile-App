@@ -1,13 +1,9 @@
 // ignore_for_file: camel_case_types
-import 'package:animated_floating_buttons/widgets/animated_floating_action_button.dart';
 import 'package:electronica_zurita/app/components/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:social_media_buttons/social_media_buttons.dart';
-import 'package:url_launcher/link.dart';
 import '../../../models/equiposProvider.dart';
 import '../../components/decorations/svgImage.dart';
-import '../../components/headerPartials.dart';
 import '../../components/workCard.dart';
 
 class listPage extends StatefulWidget {
@@ -18,7 +14,6 @@ class listPage extends StatefulWidget {
 }
 
 class _listPageState extends State<listPage> with AutomaticKeepAliveClientMixin<listPage> {
-  final GlobalKey<AnimatedFloatingActionButtonState> key =GlobalKey<AnimatedFloatingActionButtonState>();
   final List<String> estados = ['Pendiente', 'En proceso', 'Finalizado'];
   final List<String> tiposServicio = ['Mantenimiento', 'Reparación', 'Revisión'];
   final List<IconData> iconos = [Icons.pending, Icons.work, Icons.check_circle];
@@ -50,7 +45,6 @@ class _listPageState extends State<listPage> with AutomaticKeepAliveClientMixin<
     return Scaffold(
       body: Column(
         children: [
-          const headerPartials(titleHeader: "Tus Equipos"),
           Expanded(
             child: equipoProvider.isLoading
                 ? const Center(child: CircularProgressIndicator())
@@ -88,7 +82,7 @@ class _listPageState extends State<listPage> with AutomaticKeepAliveClientMixin<
                       ),
                     EquipoCard(
                       equipo: equipo,
-                      piezas: [],
+                      piezas: const [],
                     ),
                   ],
                 );
@@ -97,16 +91,7 @@ class _listPageState extends State<listPage> with AutomaticKeepAliveClientMixin<
           ),
         ],
       ),
-      /*floatingActionButton: AnimatedFloatingActionButton(
-        //Fab list
-          fabButtons: <Widget>[
-            filterButton(), whatsAppWork()
-          ],
-          key : key,
-          colorStartAnimation: AppColors.contrastColor,
-          colorEndAnimation: AppColors.secondaryColor,
-          animatedIconData: AnimatedIcons.menu_close,
-      ),*/
+      floatingActionButton: filterButton()
     );
   }
 
@@ -162,25 +147,6 @@ class _listPageState extends State<listPage> with AutomaticKeepAliveClientMixin<
             child: const Text('Aplicar Filtros'),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget whatsAppWork() {
-    const String phoneNumber = '593995603471'; // Reemplaza con el número de teléfono
-    const String message = 'Hola, un gusto saludarte! Quisiera solicitar un trabajo, por favor.'; // Reemplaza con tu mensaje
-    final whatsappUrl = 'https://wa.me/$phoneNumber?text=${Uri.encodeFull(message)}';
-
-    return Link(
-      uri: Uri.parse(whatsappUrl),
-      target: LinkTarget.self,
-      builder: (context, followLink) => FloatingActionButton(
-        onPressed: followLink,
-        backgroundColor: AppColors.accentColor, // Color de fondo del botón
-        child: const Icon(
-          SocialMediaIcons.whatsapp, // Icono de WhatsApp
-          color: Colors.white,
-        ),
       ),
     );
   }
