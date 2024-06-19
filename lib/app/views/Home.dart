@@ -1,5 +1,4 @@
 // ignore_for_file: camel_case_types
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:electronica_zurita/app/components/headerPartials.dart';
 import 'package:electronica_zurita/app/views/pages/listPage.dart';
 import 'package:electronica_zurita/app/views/pages/profileUser.dart';
@@ -72,10 +71,6 @@ class _homeScreenState extends State<homeScreen>{
     );
   }
 
-  Widget defineNavBar(){
-    return const BackButton();
-  }
-
   Widget googleNavBar(){
     return Container(
       decoration: const BoxDecoration(
@@ -101,22 +96,6 @@ class _homeScreenState extends State<homeScreen>{
           },
         )
       ),
-    );
-  }
-
-  Widget buildNavBottom() {
-    return CurvedNavigationBar(
-      index: selectedPage,
-      backgroundColor: Colors.transparent,
-      buttonBackgroundColor: AppColors.contrastColor,
-      color: AppColors.contrastColor,
-      items: const [
-        Icon(Icons.list_alt_rounded, color: AppColors.bgColor),
-        Icon(Icons.person_rounded, color: AppColors.bgColor),
-      ],
-      onTap: (int index) {
-        _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
-      },
     );
   }
 
