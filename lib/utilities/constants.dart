@@ -1,5 +1,4 @@
 // ignore_for_file: constant_identifier_names
-// const backend_URL = "https://backend-tesis2-eoghjjbb3-lascanoaldahirs-projects.vercel.app";
 const backend_URL =  "https://backendtesis.onrender.com/api/";
 const login = "${backend_URL}cliente/login";
 const perfilCliente = "${backend_URL}cliente";

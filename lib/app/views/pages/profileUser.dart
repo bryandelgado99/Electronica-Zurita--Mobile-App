@@ -1,9 +1,12 @@
 // ignore_for_file: camel_case_types
 
+import 'dart:async';
+import 'dart:io';
 import 'package:electronica_zurita/app/components/commonButtons.dart';
+import 'package:electronica_zurita/app/views/logoutView.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../components/ClienteProvider.dart';
 import '../../components/app_colors.dart';
 import '../../components/ClienteInfo.dart';
@@ -60,7 +63,7 @@ class _profilePageState extends State<profilePage> {
                     icon: Icons.logout_rounded,
                     text: "Cerrar Sesión",
                     onPressed: () {
-                      SystemNavigator.pop();
+                      _showLogoutDialog(context);
                     },
                     color_btn: AppColors.secondaryColor,
                     font_color: AppColors.bgColor,
@@ -79,5 +82,51 @@ class _profilePageState extends State<profilePage> {
       ),
     );
   }
-}
 
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Column(
+            children: [
+              Icon(Icons.crisis_alert_rounded, size: 35,),
+              SizedBox(height: 10,),
+              Text('Confirmación', style: TextStyle(fontSize: 25),),
+            ],
+          ),
+          content: const Text('¿Estás seguro de que deseas cerrar sesión?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Cerrar el diálogo
+              },
+              child: const Text('Cancelar'),
+            ),
+            FilledButton(
+              onPressed: () async {
+                final prefs = await SharedPreferences.getInstance();
+                await prefs.clear();
+
+                if (!mounted) return;
+
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LogoutView()),
+                      (Route<dynamic> route) => false,
+                );
+
+                // Espera 5 segundos y cierra la aplicación
+                Timer(const Duration(milliseconds: 300), () {
+                  exit(0);
+                });
+              },
+              child: const Text('Cerrar Sesión'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+}

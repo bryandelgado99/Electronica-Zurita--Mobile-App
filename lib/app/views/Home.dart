@@ -55,7 +55,7 @@ class _homeScreenState extends State<homeScreen>{
       child: PageView(
         controller: _pageController,
         children: [
-          const listPage(), // Modificación aquí
+          const ListPage(), // Modificación aquí
           profilePage(token: DataUser.token), // Pasar el token a profilePage
         ],
         onPageChanged: (index) {

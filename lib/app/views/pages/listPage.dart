@@ -6,15 +6,15 @@ import '../../../models/Equipo.dart';
 import '../../../models/equiposProvider.dart';
 import '../../components/workCard.dart';
 
-class listPage extends StatefulWidget {
-  const listPage({super.key});
+class ListPage extends StatefulWidget {
+  const ListPage({super.key});
 
   @override
-  State<listPage> createState() => _listPageState();
+  State<ListPage> createState() => _ListPageState();
 }
 
-class _listPageState extends State<listPage>
-    with AutomaticKeepAliveClientMixin<listPage> {
+class _ListPageState extends State<ListPage>
+    with AutomaticKeepAliveClientMixin<ListPage> {
   final List<String> estados = ['Pendiente', 'En proceso', 'Finalizado'];
   final List<String> tiposServicio = ['Mantenimiento', 'Reparación', 'Revisión'];
 
@@ -40,8 +40,8 @@ class _listPageState extends State<listPage>
       return equipo.estado == selectedEstado;
     }).toList();
 
-    // Verificar si no hay equipos en el estado seleccionado
-    final bool noHayEquipos = equipos.isEmpty;
+    // Ordenar equipos por tipo de servicio
+    equiposFiltrados.sort((a, b) => a.servicio.compareTo(b.servicio));
 
     return Scaffold(
       body: Column(
@@ -55,18 +55,33 @@ class _listPageState extends State<listPage>
               child: equipoProvider.isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : equiposFiltrados.isEmpty
-                  ? const Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(height: 50),
-                    Text(
-                      'No tienes ordenes de trabajo para este estado',
-                      textAlign: TextAlign.center,
+                  ? ListView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                children: const [
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(height: 50),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'No tienes ordenes de trabajo para este estado.',
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              "Desliza para actualizar tu lista de equipos. ",
+                              textAlign: TextAlign.center,
+                            )
+                          ],
+                        )
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               )
                   : ListView.builder(
                 itemCount: equiposFiltrados.length,
@@ -76,11 +91,9 @@ class _listPageState extends State<listPage>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       if (index == 0 ||
-                          equipo.servicio !=
-                              equiposFiltrados[index - 1].servicio)
+                          equipo.servicio != equiposFiltrados[index - 1].servicio)
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
+                          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                           child: Text(
                             equipo.servicio.toUpperCase(),
                             style: const TextStyle(
@@ -120,17 +133,6 @@ class _listPageState extends State<listPage>
           ),
         ],
       ),
-      floatingActionButton: noHayEquipos
-          ? FloatingActionButton(
-        onPressed: () async {
-          await Provider.of<EquipoProvider>(context, listen: false)
-              .fetchEquipos();
-        },
-        backgroundColor: AppColors.primaryColor,
-        foregroundColor: Colors.white,
-        child: const Icon(Icons.refresh),
-      )
-          : null,
     );
   }
 
