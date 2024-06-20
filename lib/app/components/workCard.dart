@@ -6,7 +6,8 @@ import '../../models/Equipo.dart';
 import '../../models/proforma/Proforma.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 
-// Definición del widget EquipoCard
+import '../../models/proforma/proformaProvider.dart';
+
 class EquipoCard extends StatefulWidget {
   final Equipo equipo;
   final List<Piezas> piezas;
@@ -18,12 +19,50 @@ class EquipoCard extends StatefulWidget {
 }
 
 class _EquipoCardState extends State<EquipoCard> {
+  void _showProforma(BuildContext context) async {
+    final proformaProvider = ProformaProvider();
+    final proforma = await proformaProvider.fetchProformaByEquipoId(widget.equipo.id);
+
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          padding: const EdgeInsets.all(16.0),
+          child: proforma == null
+              ? Center(
+            child: Column(
+              children: [
+                Text("Orden Nro. ${widget.equipo.numOrden}", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white)),
+                const SizedBox(height: 25),
+                const Text(
+                  "No existe proforma para este equipo",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: Colors.white),
+                ),
+              ],
+            ),
+          )
+              : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const Text(
+                'Proforma del equipo',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 16),
+              ...proforma.piezas.map((pieza) => Text('Pieza: ${pieza.pieza}, Precio: ${pieza.precio}')),
+              Text('Precio Total: ${proforma.precioTotal}'),
+              const SizedBox(height: 16),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     Color textColor;
 
-    // Establecer el color del texto según el estado del servicio
     switch (widget.equipo.estado) {
       case 'Pendiente':
         textColor = AppColors.secondaryColor;
@@ -35,7 +74,7 @@ class _EquipoCardState extends State<EquipoCard> {
         textColor = AppColors.accentColor;
         break;
       default:
-        textColor = Colors.black; // Color por defecto
+        textColor = Colors.black;
         break;
     }
 
@@ -119,7 +158,7 @@ class _EquipoCardState extends State<EquipoCard> {
                         backgroundColor: AppColors.contrastColor,
                       ),
                       onPressed: () {
-                        //_mostrarProforma(context, widget.equipo);
+                        _showProforma(context);
                       },
                       child: const Text('Mostrar proforma'),
                     ),
@@ -148,7 +187,7 @@ class _EquipoCardState extends State<EquipoCard> {
                             backgroundColor: AppColors.primaryColor,
                           ),
                           onPressed: () {
-                            //_showModalProform(context, widget.equipo, widget.componentes);
+
                           },
                           child: const Icon(Icons.newspaper_outlined),
                         ),

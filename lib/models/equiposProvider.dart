@@ -43,7 +43,6 @@ class EquipoProvider with ChangeNotifier {
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);
 
-        // Mapear los datos a objetos Equipo
         List<Equipo> equiposFiltrados = data
             .map((e) => Equipo.fromJson(e))
             .where((equipo) => equipo.cliente.id == DataUser.clienteId)
@@ -53,12 +52,10 @@ class EquipoProvider with ChangeNotifier {
         isLoading = false;
         notifyListeners();
       } else {
-        // Imprimir el código de estado en caso de error
         isLoading = false;
         notifyListeners();
       }
     } catch (e) {
-      // Imprimir el error en caso de excepción
       isLoading = false;
       notifyListeners();
     }

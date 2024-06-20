@@ -24,43 +24,39 @@ class Piezas {
 
 class Proforma {
   String id;
+  String ordenId;
   bool aceptado;
   List<Piezas> piezas;
   double precioTotal;
-  DateTime createdAt;
-  DateTime updatedAt;
 
   Proforma({
     required this.id,
+    required this.ordenId,
     required this.aceptado,
     required this.piezas,
     required this.precioTotal,
-    required this.createdAt,
-    required this.updatedAt,
   });
 
   factory Proforma.fromJson(Map<String, dynamic> json) {
-    var list = json['piezas'] as List;
-    List<Piezas> piezasList = list.map((i) => Piezas.fromJson(i)).toList();
+    var list = json['piezas'] as List<dynamic>?;
+    List<Piezas> piezasList = list != null ? list.map((i) => Piezas.fromJson(i)).toList() : [];
 
     return Proforma(
       id: json['_id'],
+      ordenId: json['ordenId'],
       aceptado: json['aceptado'],
       piezas: piezasList,
       precioTotal: json['precioTotal'].toDouble(),
-      createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       '_id': id,
+      'ordenId': ordenId,
       'aceptado': aceptado,
       'piezas': piezas.map((v) => v.toJson()).toList(),
       'precioTotal': precioTotal,
-      'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt.toIso8601String(),
     };
   }
 }
