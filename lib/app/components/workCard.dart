@@ -96,6 +96,18 @@ class _EquipoCardState extends State<EquipoCard> {
             Row(
               children: [
                 const Text(
+                  'Equipo: ',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                ),
+                Text(
+                  widget.equipo.equipo,
+                  style: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w400),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                const Text(
                   'Estado: ',
                   style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
                 ),
@@ -104,7 +116,7 @@ class _EquipoCardState extends State<EquipoCard> {
                   style: TextStyle(fontSize: 13, color: textColor, fontWeight: FontWeight.w600),
                 ),
               ],
-            ),
+            )
           ],
         ),
         children: <Widget>[
