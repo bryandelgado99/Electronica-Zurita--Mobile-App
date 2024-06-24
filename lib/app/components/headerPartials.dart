@@ -6,8 +6,6 @@ import 'dart:io';
 import 'package:electronica_zurita/app/components/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:social_media_buttons/social_media_icons.dart';
-import 'package:url_launcher/link.dart';
 
 import '../views/logoutView.dart';
 
@@ -41,7 +39,7 @@ class headerPartials extends StatelessWidget implements PreferredSizeWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Icon(Icons.logout_rounded, size: 15, color: Colors.white,),
-                      const SizedBox(width: 10,),
+                      SizedBox(width: 10,),
                       Text("Salir", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 15),)
                     ],
                   ),
