@@ -215,10 +215,10 @@ class _EquipoCardState extends State<EquipoCard> {
                   topRight: Radius.circular(24),
                 ),
               ),
-              child: Column(
+              child: const Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
+                children: [
                   Text(
                     'No existe proforma para este equipo',
                     style: TextStyle(fontSize: 18,
@@ -262,22 +262,22 @@ class _EquipoCardState extends State<EquipoCard> {
                   Center(
                     child: Text(
                       'Orden Nro. ${equipo.numOrden}',
-                      style: const TextStyle(fontSize: 18,
+                      style: const TextStyle(fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 20),
                   Text(
                     'Modelo: ${equipo.modelo}',
-                    style: const TextStyle(fontSize: 18,
+                    style: const TextStyle(fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     'Observaciones: ${equipo.razon}',
-                    style: const TextStyle(fontSize: 16, color: Colors.black),
+                    style: const TextStyle(fontSize: 14, color: Colors.black),
                   ),
                   const SizedBox(height: 20),
                   const Text(
@@ -315,44 +315,7 @@ class _EquipoCardState extends State<EquipoCard> {
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
                   ),
-                  const SizedBox(height: 30),
-                  const Text(
-                    '¿Estás de acuerdo con esta proforma?',
-                    style: TextStyle(fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 15),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: Colors.green,
-                        ),
-                        onPressed: () {
-                          // Aceptar proforma
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text("Sí"),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: Colors.red,
-                        ),
-                        onPressed: () {
-                          // Rechazar proforma
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text("No"),
-                      ),
-                    ],
-                  ),
-                ],
+                 ]
               ),
             ),
           ),

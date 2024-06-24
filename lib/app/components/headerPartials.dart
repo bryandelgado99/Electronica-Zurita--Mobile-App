@@ -1,9 +1,15 @@
 // ignore_for_file: camel_case_types
 
+import 'dart:async';
+import 'dart:io';
+
 import 'package:electronica_zurita/app/components/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_media_buttons/social_media_icons.dart';
 import 'package:url_launcher/link.dart';
+
+import '../views/logoutView.dart';
 
 class headerPartials extends StatelessWidget implements PreferredSizeWidget {
   const headerPartials({super.key});
@@ -24,32 +30,71 @@ class headerPartials extends StatelessWidget implements PreferredSizeWidget {
               children: [
                 Image.asset('assets/images/logo_bn@2x.png', width: 60),
                 const Spacer(),
-                whatsAppWork()
+                FilledButton(
+                  style: const ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll(AppColors.secondaryColor)
+                  ),
+                    onPressed: (){
+                      _showLogoutDialog(context);
+                      },
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.logout_rounded, size: 15, color: Colors.white,),
+                      const SizedBox(width: 10,),
+                      Text("Salir", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 15),)
+                    ],
+                  ),
+                )
               ],
           ),
         ],
       ),
   );
 
-  Widget whatsAppWork() {
-    const String phoneNumber = '593995603471'; // Reemplaza con el número de teléfono
-    const String message = 'Hola, un gusto saludarte! Quisiera solicitar un trabajo, por favor.'; // Reemplaza con tu mensaje
-    final whatsappUrl = 'https://wa.me/$phoneNumber?text=${Uri.encodeFull(message)}';
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Column(
+            children: [
+              Icon(Icons.crisis_alert_rounded, size: 35,),
+              SizedBox(height: 10,),
+              Text('Confirmación', style: TextStyle(fontSize: 25),),
+            ],
+          ),
+          content: const Text('¿Estás seguro de que deseas cerrar sesión?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Cerrar el diálogo
+              },
+              child: const Text('Cancelar'),
+            ),
+            FilledButton(
+              onPressed: () async {
+                final prefs = await SharedPreferences.getInstance();
+                await prefs.clear();
 
-    return Link(
-      uri: Uri.parse(whatsappUrl),
-      target: LinkTarget.self,
-      builder: (context, followLink) => IconButton(
-        onPressed: followLink,
-        icon: const Icon(
-          SocialMediaIcons.whatsapp, // Icono de WhatsApp
-          color: Colors.white,
-          size: 28,
-        ),// Color de fondo del botón
-      ),
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LogoutView()),
+                      (Route<dynamic> route) => false,
+                );
+
+                // Espera 5 segundos y cierra la aplicación
+                Timer(const Duration(milliseconds: 300), () {
+                  exit(0);
+                });
+              },
+              child: const Text('Cerrar Sesión'),
+            ),
+          ],
+        );
+      },
     );
   }
-
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight + 32); // Altura del AppBar más el padding
