@@ -130,6 +130,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                               if (ruc!.isEmpty) {
                                                 return "Campo obligatorio";
                                               }
+                                              if(!ruc.contains('@')){
+                                                return "Formato de correo inválido";
+                                              }
                                               return null;
                                             },
                                           ),
@@ -203,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 setState(() {
                                                   _isLoggingIn = true; // Cambia el estado de inicio de sesión
                                                 });
-                                                _iniciarSesion();
+                                                _iniciarSesion(context);
                                               }
                                             },
                                             color_btn: AppColors.secondaryColor,
@@ -211,7 +214,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             color_icon: AppColors.bgColor,
                                           ),
                                           const SizedBox(height: 5,),
-                                          Center(child: whatsAppWork())
+                                          //Center(child: whatsAppWork()),
                                         ],
                                       ),
                                     )
@@ -233,47 +236,56 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void _iniciarSesion() async {
+  Future<void> _iniciarSesion(BuildContext context) async {
     await EasyLoading.show(status: 'Iniciando Sesión...');
 
     final String correo = correoController.text;
     final String password = passwordController.text;
 
-    final response = await http.post(
-      Uri.parse(login),  // Reemplaza con la URL correcta
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode({
-        'correo': correo,
-        'password': password,
-      }),
-    );
-
-    EasyLoading.dismiss();
-
-    if (response.statusCode == 200) {
-      final responseBody = jsonDecode(response.body);
-      //Extrae el ID del cliente de la respuesta
-      final dynamic idObject = responseBody['_id'];
-      final String clienteID = idObject.toString();
-      final String token = responseBody['token'];
-
-      // Guarda el token y el ID del cliente en la clase DataUser
-      DataUser.token = token;
-      DataUser.clienteId = clienteID;
-
-      // Navega a la pantalla principal
-      Navigator.pushReplacement(
-        // ignore: use_build_context_synchronously
-        context,
-        MaterialPageRoute(builder: (context) => const homeScreen()),
+    try {
+      final response = await http.post(
+        Uri.parse(login), // Reemplaza con la URL correcta
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'correo': correo,
+          'password': password,
+        }),
       );
-    } else {
-      // Maneja los errores de inicio de sesión mostrando un AlertDialog
-      final responseBody = jsonDecode(response.body);
-      // ignore: use_build_context_synchronously
-      _mostrarErrorDialog(context, response.statusCode, responseBody['msg']);
+
+      EasyLoading.dismiss();
+
+      if (response.statusCode == 200) {
+        // Usar compute para deserializar JSON en un aislado separado
+        final responseBody = await compute(jsonDecode, response.body);
+        // Extrae el ID del cliente de la respuesta
+        final dynamic idObject = responseBody['_id'];
+        final String clienteID = idObject.toString();
+        final String token = responseBody['token'];
+
+        // Guarda el token y el ID del cliente en la clase DataUser
+        DataUser.token = token;
+        DataUser.clienteId = clienteID;
+
+        // Navega a la pantalla principal
+        Navigator.pushReplacement(
+          // ignore: use_build_context_synchronously
+          context,
+          MaterialPageRoute(builder: (context) => const homeScreen()),
+        );
+      } else {
+        // Maneja los errores de inicio de sesión mostrando un AlertDialog
+        final responseBody = await compute(jsonDecode, response.body);
+        // ignore: use_build_context_synchronously
+        _mostrarErrorDialog(context, response.statusCode, responseBody['msg']);
+        _isLoggingIn = false;
+      }
+    } catch (error) {
+      EasyLoading.dismiss();
+      // Manejar errores de red o deserialización aquí
+      _mostrarErrorDialog(context, 500, 'No existe conexión a internet. Verifica tu conexión e intentalo nuevamente.');
+      _isLoggingIn = false;
     }
   }
 

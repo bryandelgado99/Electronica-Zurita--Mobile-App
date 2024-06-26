@@ -51,12 +51,20 @@ dependencies:
   provider: ^6.1.2
   expansion_tile_card: ^3.0.0
   google_nav_bar: ^5.0.6
+  connectivity_plus: ^6.0.3
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   mockito: ^5.0.0
+  flutter_launcher_icons: ^0.13.1
 
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: false
+  image_path: "assets/launcher/icon.png"
+  min_sdk_android: 21
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

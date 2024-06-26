@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../components/ClienteProvider.dart';
+import '../../../models/ClienteProvider.dart';
 import '../../components/ClienteInfo.dart';
 
 class profilePage extends StatefulWidget {
