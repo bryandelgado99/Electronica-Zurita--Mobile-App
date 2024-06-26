@@ -46,7 +46,6 @@ dependencies:
   flutter_easyloading: ^3.0.5
   flutter_native_splash: ^2.4.0
   grouped_list: ^5.1.2
-  flutter_local_notifications: ^17.1.2
   http: ^1.2.1
   provider: ^6.1.2
   expansion_tile_card: ^3.0.0

@@ -294,7 +294,15 @@ class _LoginScreenState extends State<LoginScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Error al iniciar sesión', style: TextStyle(color: AppColors.contrastColor, fontWeight: FontWeight.w600)),
+          title: Center(
+            child: Column(
+              children: [
+                const Icon(Icons.warning_rounded, size: 30, color: AppColors.secondaryColor,),
+                const SizedBox(height: 8,),
+                const Text('Error al iniciar sesión', style: TextStyle(color: AppColors.contrastColor, fontWeight: FontWeight.w400)),
+              ],
+            ),
+          ),
           content: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -306,8 +314,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 title: Column(
                   children: [
                     Text(msg, style: const TextStyle(fontSize: 14)),
-                    const SizedBox(height: 8,),
-                    const Text("EL usuario y/o contraseña son incorrectos.", style: TextStyle(fontSize: 14),),
                   ],
                 ),
               ),
@@ -317,7 +323,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('OK'),
+              child: const Text('Cerrar'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
