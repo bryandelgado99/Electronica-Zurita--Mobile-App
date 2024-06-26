@@ -82,7 +82,7 @@ class headerPartials extends StatelessWidget implements PreferredSizeWidget {
                 );
 
                 // Espera 5 segundos y cierra la aplicación
-                Timer(const Duration(milliseconds: 300), () {
+                Timer(const Duration(milliseconds: 600), () {
                   exit(0);
                 });
               },

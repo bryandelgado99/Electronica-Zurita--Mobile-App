@@ -17,11 +17,10 @@ class RestaurarPwsd extends StatefulWidget {
 class _RestaurarPwsdState extends State<RestaurarPwsd> {
   TextEditingController recpassController = TextEditingController();
   final _recpass = GlobalKey<FormState>();
-  //final String _recuperarcredenciales = 'https://backendtesis.onrender.com/api/cliente/recuperar-contra';  // URL actualizada
 
   Future<void> _recuperarContrasena() async {
     final String correo = recpassController.text;
-    const String uri = "https://backendtesis.onrender.com/api/cliente/recuperar-contra";
+    const String uri = "https://backendtesis.onrender.com/api/cliente/recuperar-password";
     if (kDebugMode) {
       print('Correo ingresado: $correo');
     }
