@@ -1,16 +1,13 @@
 class Cliente {
   final String id;
-  final int cedula;
 
   Cliente({
     required this.id,
-    required this.cedula,
   });
 
   factory Cliente.fromJson(Map<String, dynamic> json) {
     return Cliente(
       id: json['_id'],
-      cedula: json['cedula'],
     );
   }
 }

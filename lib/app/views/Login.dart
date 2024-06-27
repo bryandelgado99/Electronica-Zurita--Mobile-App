@@ -264,6 +264,9 @@ class _LoginScreenState extends State<LoginScreen> {
         final String clienteID = idObject.toString();
         final String token = responseBody['token'];
 
+        print(clienteID);
+        print(token);
+
         // Guarda el token y el ID del cliente en la clase DataUser
         DataUser.token = token;
         DataUser.clienteId = clienteID;

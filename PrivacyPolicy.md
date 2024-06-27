@@ -1,37 +1,46 @@
-**Terms & Conditions**
+<h1>Privacy Policy for Electrónica Zurita</h1>
 
-These terms and conditions applies to the Electrónica Zurita app (hereby referred to as "Application") for mobile devices that was created by (hereby referred to as "Service Provider") as a Free service.
+<p>At Electrónica Zurita, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by Electrónica Zurita and how we use it.</p>
 
-Upon downloading or utilizing the Application, you are automatically agreeing to the following terms. It is strongly advised that you thoroughly read and understand these terms prior to using the Application. Unauthorized copying, modification of the Application, any part of the Application, or our trademarks is strictly prohibited. Any attempts to extract the source code of the Application, translate the Application into other languages, or create derivative versions are not permitted. All trademarks, copyrights, database rights, and other intellectual property rights related to the Application remain the property of the Service Provider.
+<p>If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us.</p>
 
-The Service Provider is dedicated to ensuring that the Application is as beneficial and efficient as possible. As such, they reserve the right to modify the Application or charge for their services at any time and for any reason. The Service Provider assures you that any charges for the Application or its services will be clearly communicated to you.
+<h2>Log Files</h2>
 
-The Application stores and processes personal data that you have provided to the Service Provider in order to provide the Service. It is your responsibility to maintain the security of your phone and access to the Application. The Service Provider strongly advise against jailbreaking or rooting your phone, which involves removing software restrictions and limitations imposed by the official operating system of your device. Such actions could expose your phone to malware, viruses, malicious programs, compromise your phone's security features, and may result in the Application not functioning correctly or at all.
+<p>Electrónica Zurita follows a standard procedure of using log files. These files log visitors when they use app. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends, administering the app, tracking users' movement on the app, and gathering demographic information.</p>
 
-Please note that the Application utilizes third-party services that have their own Terms and Conditions. Below are the links to the Terms and Conditions of the third-party service providers used by the Application:
+<h2>Our Advertising Partners</h2>
 
-*   [Google Play Services](https://policies.google.com/terms)
+<p>Some of advertisers in our app may use cookies and web beacons. Our advertising partners are listed below. Each of our advertising partners has their own Privacy Policy for their policies on user data. For easier access, we hyperlinked to their Privacy Policies below.</p>
 
-Please be aware that the Service Provider does not assume responsibility for certain aspects. Some functions of the Application require an active internet connection, which can be Wi-Fi or provided by your mobile network provider. The Service Provider cannot be held responsible if the Application does not function at full capacity due to lack of access to Wi-Fi or if you have exhausted your data allowance.
+<ul>
+    <li>
+        <p>Google</p>
+        <p><a href="https://policies.google.com/technologies/ads">https://policies.google.com/technologies/ads</a></p>
+    </li>
+</ul>
 
-If you are using the application outside of a Wi-Fi area, please be aware that your mobile network provider's agreement terms still apply. Consequently, you may incur charges from your mobile provider for data usage during the connection to the application, or other third-party charges. By using the application, you accept responsibility for any such charges, including roaming data charges if you use the application outside of your home territory (i.e., region or country) without disabling data roaming. If you are not the bill payer for the device on which you are using the application, they assume that you have obtained permission from the bill payer.
+<h2>Privacy Policies</h2>
 
-Similarly, the Service Provider cannot always assume responsibility for your usage of the application. For instance, it is your responsibility to ensure that your device remains charged. If your device runs out of battery and you are unable to access the Service, the Service Provider cannot be held responsible.
+<P>You may consult this list to find the Privacy Policy for each of the advertising partners of Electrónica Zurita.</p>
 
-In terms of the Service Provider's responsibility for your use of the application, it is important to note that while they strive to ensure that it is updated and accurate at all times, they do rely on third parties to provide information to them so that they can make it available to you. The Service Provider accepts no liability for any loss, direct or indirect, that you experience as a result of relying entirely on this functionality of the application.
+<p>Third-party ad servers or ad networks uses technologies like cookies, JavaScript, or Beacons that are used in their respective advertisements and links that appear on Electrónica Zurita. They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on this app or other apps or websites.</p>
 
-The Service Provider may wish to update the application at some point. The application is currently available as per the requirements for the operating system (and for any additional systems they decide to extend the availability of the application to) may change, and you will need to download the updates if you want to continue using the application. The Service Provider does not guarantee that it will always update the application so that it is relevant to you and/or compatible with the particular operating system version installed on your device. However, you agree to always accept updates to the application when offered to you. The Service Provider may also wish to cease providing the application and may terminate its use at any time without providing termination notice to you. Unless they inform you otherwise, upon any termination, (a) the rights and licenses granted to you in these terms will end; (b) you must cease using the application, and (if necessary) delete it from your device.
+<p>Note that Electrónica Zurita has no access to or control over these cookies that are used by third-party advertisers.</p>
 
-**Changes to These Terms and Conditions**
+<h2>Third Party Privacy Policies</h2>
 
-The Service Provider may periodically update their Terms and Conditions. Therefore, you are advised to review this page regularly for any changes. The Service Provider will notify you of any changes by posting the new Terms and Conditions on this page.
+<p>Electrónica Zurita's Privacy Policy does not apply to other advertisers or websites. Thus, we are advising you to consult the respective Privacy Policies of these third-party ad servers for more detailed information. It may include their practices and instructions about how to opt-out of certain options.</p>
 
-These terms and conditions are effective as of 2024-06-26
+<h2>Children's Information</h2>
 
-**Contact Us**
+<p>Another part of our priority is adding protection for children while using the internet. We encourage parents and guardians to observe, participate in, and/or monitor and guide their online activity.</p>
 
-If you have any questions or suggestions about the Terms and Conditions, please do not hesitate to contact the Service Provider at bryand9970@gmail.com.
+<p>Electrónica Zurita does not knowingly collect any Personal Identifiable Information from children under the age of 13. If you think that your child provided this kind of information on our App, we strongly encourage you to contact us immediately and we will do our best efforts to promptly remove such information from our records.</p>
 
-* * *
+<h2>Online Privacy Policy Only</h2>
 
-This Terms and Conditions page was generated by [App Privacy Policy Generator](https://app-privacy-policy-generator.nisrulz.com/)
+<p>This Privacy Policy applies only to our online activities and is valid for visitors to our App with regards to the information that they shared and/or collect in Electrónica Zurita. This policy is not applicable to any information collected offline or via channels other than this app. Our Privacy Policy was created with the help of the <a href="https://www.app-privacy-policy.com/app-privacy-policy-generator/">App Privacy Policy Generator from App-Privacy-Policy.com</a></p>
+
+<h2>Consent</h2>
+
+<p>By using our app, you hereby consent to our Privacy Policy and agree to its Terms and Conditions.</p>

@@ -20,7 +20,7 @@ class _RestaurarPwsdState extends State<RestaurarPwsd> {
 
   Future<void> _recuperarContrasena() async {
     final String correo = recpassController.text;
-    const String uri = "https://backendtesis.onrender.com/api/cliente/recuperar-password";
+    const String uri = "https://backendtesis.onrender.com/api/recuperar-passwordCli";
     if (kDebugMode) {
       print('Correo ingresado: $correo');
     }
@@ -44,7 +44,7 @@ class _RestaurarPwsdState extends State<RestaurarPwsd> {
       } else {
         final responseBody = jsonDecode(response.body);
         if (responseBody.containsKey('msg')) {
-          EasyLoading.showError('Error: ${responseBody['msg']}');
+          EasyLoading.showError('${responseBody['msg']}');
         } else {
           EasyLoading.showError('Error desconocido al enviar correo');
         }

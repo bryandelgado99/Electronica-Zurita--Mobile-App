@@ -30,7 +30,9 @@ class EquipoProvider with ChangeNotifier {
 
   Future<void> fetchEquipos() async {
     final String token = DataUser.token;
-    const String url = '${backend_URL}ordenes/listar';
+    final String url = '${backend_URL}ordenes/listar';
+
+    print("Fetching equipos with token: $token");
 
     try {
       final response = await http.get(
@@ -40,22 +42,23 @@ class EquipoProvider with ChangeNotifier {
         },
       );
 
-      if (response.statusCode == 200) {
-        List<dynamic> data = json.decode(response.body);
+        if (response.statusCode == 200) {
+          List<dynamic> data = json.decode(response.body);
 
-        List<Equipo> equiposFiltrados = data
-            .map((e) => Equipo.fromJson(e))
-            .where((equipo) => equipo.cliente.id == DataUser.clienteId)
-            .toList();
+          List<Equipo> equiposFiltrados = data
+              .map((e) => e != null ? Equipo.fromJson(e) : null)
+              .where((equipo) => equipo != null && equipo.cliente.id == DataUser.clienteId)
+              .cast<Equipo>()
+              .toList();
 
-        setEquipos(equiposFiltrados);
-        isLoading = false;
-        notifyListeners();
-      } else {
-        isLoading = false;
-        notifyListeners();
+          setEquipos(equiposFiltrados);
+
+        } else {
+          print("Failed to fetch equipos: ${response.statusCode}");
       }
     } catch (e) {
+      print("Error fetching equipos: $e");
+    } finally {
       isLoading = false;
       notifyListeners();
     }
