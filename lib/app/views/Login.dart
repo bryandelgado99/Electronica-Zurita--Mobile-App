@@ -288,7 +288,6 @@ class _LoginScreenState extends State<LoginScreen> {
       EasyLoading.dismiss();
       // Manejar errores de red o deserialización aquí
       _mostrarErrorDialog(context, 500, 'No existe conexión a internet. Verifica tu conexión e intentalo nuevamente.');
-      _isLoggingIn = false;
     }
   }
 
@@ -329,6 +328,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: const Text('Cerrar'),
               onPressed: () {
                 Navigator.of(context).pop();
+                _isLoggingIn = false;
               },
             ),
           ],
