@@ -20,7 +20,7 @@ class _RestaurarPwsdState extends State<RestaurarPwsd> {
 
   Future<void> _recuperarContrasena() async {
     final String correo = recpassController.text;
-    const String uri = "https://backendtesis.onrender.com/api/recuperar-passwordCli";
+    const String uri = "https://backendtesis.onrender.com/api/cliente/recuperar-password";
     if (kDebugMode) {
       print('Correo ingresado: $correo');
     }
