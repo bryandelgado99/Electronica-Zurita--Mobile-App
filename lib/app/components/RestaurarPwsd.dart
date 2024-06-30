@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'package:electronica_zurita/app/components/decorations/texts/widgetText.dart';
 import 'package:electronica_zurita/app/components/app_colors.dart';
+import 'package:electronica_zurita/utilities/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
@@ -20,7 +21,7 @@ class _RestaurarPwsdState extends State<RestaurarPwsd> {
 
   Future<void> _recuperarContrasena() async {
     final String correo = recpassController.text;
-    const String uri = "https://backendtesis.onrender.com/api/cliente/recuperar-password";
+
     if (kDebugMode) {
       print('Correo ingresado: $correo');
     }
@@ -28,7 +29,7 @@ class _RestaurarPwsdState extends State<RestaurarPwsd> {
 
     try {
       final response = await http.post(
-        Uri.parse(uri),
+        Uri.parse(reset_pwsd),
         headers: {
           'Content-Type': 'application/json',
         },
