@@ -133,15 +133,20 @@ class _EquipoCardState extends State<EquipoCard> {
                     widget.equipo.estado == 'Pendiente') ...[
                   const SizedBox(height: 20),
                   Center(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: AppColors.contrastColor,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.dangerous_rounded, color: AppColors.secondaryColor),
+                          SizedBox(width: 10),
+                          Text(
+                            "Proforma pendiente",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                        ],
                       ),
-                      onPressed: () {
-                        _mostrarProforma(context, widget.equipo);
-                      },
-                      child: const Text('Mostrar proforma'),
                     ),
                   ),
                 ] else
@@ -159,7 +164,7 @@ class _EquipoCardState extends State<EquipoCard> {
                                   color: AppColors.accentColor),
                               SizedBox(width: 10),
                               Text(
-                                "Proforma Aceptada",
+                                "Proforma Adjunta",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(fontWeight: FontWeight.w600),
                               ),
@@ -171,7 +176,7 @@ class _EquipoCardState extends State<EquipoCard> {
                               backgroundColor: AppColors.primaryColor,
                             ),
                             onPressed: () {
-
+                              _mostrarProforma(context, widget.equipo);
                             },
                             child: const Icon(Icons.newspaper_outlined),
                           ),

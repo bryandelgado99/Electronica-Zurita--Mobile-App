@@ -1,5 +1,7 @@
 // ignore_for_file: camel_case_types
 
+import 'package:electronica_zurita/app/views/pages/privacy-polit.dart';
+import 'package:electronica_zurita/app/views/pages/terms-conditions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/ClienteProvider.dart';
@@ -13,50 +15,74 @@ class profilePage extends StatefulWidget {
 }
 
 class _profilePageState extends State<profilePage> {
-
   @override
   Widget build(BuildContext context) {
-
     final clienteProvider = Provider.of<ClienteProvider>(context);
 
     return Scaffold(
       body: Stack(
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(height: 10,),
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Center(child: Column(
-                      children: [
-                        const Text("Bienvenido/a", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),),
-                        Text("${clienteProvider.nombreCliente ?? 'Cargando...'}!", style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 22),)
-                      ],
-                    )),
-                  ],
+          SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(height: 10,),
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Center(child: Column(
+                        children: [
+                          const Text("Bienvenido/a", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),),
+                          Text("${clienteProvider.nombreCliente ?? 'Cargando...'}!", style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 22),)
+                        ],
+                      )),
+                    ],
+                  ),
                 ),
-              ),
-              const Spacer(),
-              ClienteInfo(
-                nombreCliente: clienteProvider.nombreCliente ?? '',
-                cedulaCliente: clienteProvider.cedulaCliente ?? '',
-                direccionCliente: clienteProvider.direccionCliente ?? '',
-                telefonoCliente: clienteProvider.telefonoCliente ?? '',
-                correoCliente: clienteProvider.correoCliente ?? '',
-                frecuente: clienteProvider.frecuente ?? false,
-              ),
-              const Spacer(),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 50),
-              ),
-              const Text("Version: 1.0.0", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w100, color: Colors.grey), textAlign: TextAlign.right,),
-              const SizedBox(height: 15,),
-            ],
+                const SizedBox(height: 25,),
+                ClienteInfo(
+                  nombreCliente: clienteProvider.nombreCliente ?? '',
+                  cedulaCliente: clienteProvider.cedulaCliente ?? '',
+                  direccionCliente: clienteProvider.direccionCliente ?? '',
+                  telefonoCliente: clienteProvider.telefonoCliente ?? '',
+                  correoCliente: clienteProvider.correoCliente ?? '',
+                  frecuente: clienteProvider.frecuente ?? false,
+                ),
+                const SizedBox(height: 25,),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 50),
+                ),
+                // Botones de términos y condiciones
+                TextButton(
+                    onPressed: (){
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return TermsConditions();
+                        },
+                      );
+                    },
+                    child: Text("Términos y Condiciones")
+                ),
+                const SizedBox(height: 6,),
+                TextButton(
+                    onPressed: (){
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Privacypolit();
+                        },
+                      );
+                    },
+                    child: Text("Políticas de Privacidad")
+                ),
+                const SizedBox(height: 15,),
+                const Text("Version: 1.0.1 + 1", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w100, color: Colors.grey), textAlign: TextAlign.right,),
+              ],
+            ),
           ),
           if (clienteProvider.isLoading)
             const Center(

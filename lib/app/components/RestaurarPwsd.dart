@@ -82,7 +82,7 @@ class _RestaurarPwsdState extends State<RestaurarPwsd> {
               ),
               const SizedBox(height: 20,),
               const widgetText(
-                text: "Por favor ingresa tu correo electrónico, si te encuentras registrado, para recibir un correo con tus credenciales.",
+                text: "Por favor ingresa tu correo electrónico registrado para obtener el enlace recuperación para tu contraseña.",
                 fontSize: 16,
                 fontWeight: FontWeight.w300,
                 color: Colors.white,

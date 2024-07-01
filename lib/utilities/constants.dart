@@ -1,8 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
-//const backend_URL =  "https://backendtesis.onrender.com/api/";
-
-const backend_URL = "https://backend-tesis.up.railway.app/api/";
+const backend_URL = "https://electronicazurita-backend.up.railway.app/api/";
 
 const login = "${backend_URL}cliente/login";
 const perfilCliente = "${backend_URL}cliente";
