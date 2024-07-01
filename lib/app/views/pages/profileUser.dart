@@ -1,5 +1,6 @@
 // ignore_for_file: camel_case_types
 
+import 'package:electronica_zurita/app/components/social_Buttons.dart';
 import 'package:electronica_zurita/app/views/pages/privacy-polit.dart';
 import 'package:electronica_zurita/app/views/pages/terms-conditions.dart';
 import 'package:flutter/material.dart';
@@ -55,6 +56,8 @@ class _profilePageState extends State<profilePage> {
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 50),
                 ),
+                socialButtons(),
+                const SizedBox(height: 6,),
                 // Botones de términos y condiciones
                 TextButton(
                     onPressed: (){
@@ -67,7 +70,6 @@ class _profilePageState extends State<profilePage> {
                     },
                     child: Text("Términos y Condiciones")
                 ),
-                const SizedBox(height: 6,),
                 TextButton(
                     onPressed: (){
                       showDialog(
