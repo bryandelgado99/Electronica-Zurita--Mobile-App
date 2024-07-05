@@ -116,19 +116,22 @@ class _ListPageState extends State<ListPage>
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-            child: Wrap(
-              spacing: 10.0,
-              children: estados.map((estado) {
-                return FilterChip(
-                  label: Text(estado),
-                  selected: selectedEstado == estado,
-                  onSelected: (isSelected) {
-                    setState(() {
-                      selectedEstado = isSelected ? estado : null;
-                    });
-                  },
-                );
-              }).toList(),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Wrap(
+                spacing: 10.0,
+                children: estados.map((estado) {
+                  return FilterChip(
+                    label: Text(estado),
+                    selected: selectedEstado == estado,
+                    onSelected: (isSelected) {
+                      setState(() {
+                        selectedEstado = isSelected ? estado : null;
+                      });
+                    },
+                  );
+                }).toList(),
+              ),
             ),
           ),
         ],

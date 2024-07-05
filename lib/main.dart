@@ -1,14 +1,20 @@
+import 'package:electronica_zurita/app/views/onBoarding/onBoarding_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'models/ClienteProvider.dart';
 import 'app/components/app_colors.dart';
 import 'app/views/Login.dart';
 import 'models/equiposProvider.dart';
 
-void main() async{
-
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Obtén la preferencia para saber si se debe mostrar la pantalla de bienvenida
+  final prefs = await SharedPreferences.getInstance();
+  final showOnBoardScreen = prefs.getBool('showOnBoardScreen') ?? true;
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
@@ -18,11 +24,10 @@ void main() async{
         create: (context) => EquipoProvider()..fetchEquipos(),
       ),
     ],
-      child: const MyApp(),
-    ),
-  );
-  configLoading();
+    child: MyApp(showOnBoardScreen: showOnBoardScreen),
+  ));
 
+  configLoading();
 }
 
 void configLoading() {
@@ -42,7 +47,9 @@ void configLoading() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool showOnBoardScreen;
+
+  const MyApp({super.key, required this.showOnBoardScreen});
 
   @override
   Widget build(BuildContext context) {
@@ -50,17 +57,18 @@ class MyApp extends StatelessWidget {
       title: 'Electrónica Zurita',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
-          scaffoldBackgroundColor: AppColors.bgColor,
-          useMaterial3: true,
-          textTheme: Theme.of(context).textTheme.apply(
-              fontFamily: 'Poppins',
-              bodyColor: AppColors.textColor,
-              displayColor: AppColors.textColor
-          ),
-          bottomSheetTheme: const BottomSheetThemeData(backgroundColor: AppColors.contrastColor)
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
+        scaffoldBackgroundColor: AppColors.bgColor,
+        useMaterial3: true,
+        textTheme: Theme.of(context).textTheme.apply(
+          fontFamily: 'Poppins',
+          bodyColor: AppColors.textColor,
+          displayColor: AppColors.textColor,
+        ),
+        bottomSheetTheme: const BottomSheetThemeData(backgroundColor: AppColors.contrastColor),
       ),
-      home: LoginScreen(),
+      // Decide la pantalla de inicio dependiendo del valor de showOnBoardScreen
+      home: showOnBoardScreen ? OnBoardScreen() : LoginScreen(),
       builder: EasyLoading.init(),
     );
   }

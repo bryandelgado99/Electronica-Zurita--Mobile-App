@@ -7,13 +7,4 @@ class AppColors{
   static const contrastColor = Color(0xFF5A6DAB);
   static const bgColor = Colors.white;
   static const textColor = Colors.black;
-
-  static const gradientbg = LinearGradient(
-    colors: [
-      primaryColor,
-      secondaryColor
-    ],
-    begin: Alignment.topRight,
-    end: Alignment.bottomLeft
-  );
 }

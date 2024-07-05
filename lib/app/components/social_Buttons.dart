@@ -41,7 +41,7 @@ Widget instaLink() {
 }
 
 Widget faceLink() {
-  final Uri url = Uri.parse('https://www.facebook.com/share/cLKEzog27R6XbtNz/?mibextid=qi2Omg');
+  final Uri url = Uri.parse('https://www.facebook.com/profile.php?id=100083414747442');
 
   return Link(
     uri: url,

@@ -4,5 +4,4 @@ const backend_URL = "https://electronicazurita-backend.up.railway.app/api/";
 
 const login = "${backend_URL}cliente/login";
 const perfilCliente = "${backend_URL}cliente";
-const proforma = "$backend_URL/proformas/orden";
 const reset_pwsd = "${backend_URL}cliente/recuperar-password";
