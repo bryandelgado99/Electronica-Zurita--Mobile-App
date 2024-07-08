@@ -1,17 +1,18 @@
 // ignore_for_file: non_constant_identifier_names, library_private_types_in_public_api
+import 'package:electronica_zurita/app/components/ClienteInfo.dart';
 import 'package:electronica_zurita/app/components/app_colors.dart';
+import 'package:electronica_zurita/app/components/whatsLink.dart';
 import 'package:flutter/material.dart';
-//import 'package:url_launcher/link.dart';
 import '../../models/Equipo.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
-
 import '../../models/proformaProvider.dart';
 
 class EquipoCard extends StatefulWidget {
   final Equipo equipo;
   final List<Piezas> piezas;
+  final ClienteInfo cliente;
 
-  const EquipoCard({super.key, required this.equipo, required this.piezas});
+  const EquipoCard({super.key, required this.equipo, required this.piezas, required this.cliente});
 
   @override
   _EquipoCardState createState() => _EquipoCardState();
@@ -320,6 +321,19 @@ class _EquipoCardState extends State<EquipoCard> {
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
                   ),
+                  const SizedBox(height: 25,),
+                  // Sección de botón de contacto
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Text("Para mayor información sobre esta proforma o la cancelación del trabajo, comuniquese con el técnico.", style: TextStyle(fontSize: 12), textAlign: TextAlign.center,),
+                        const SizedBox(height: 15,),
+                        Whatslink(cliente: widget.cliente, equipo: equipo),
+                      ],
+                    ),
+                  )
                  ]
               ),
             ),

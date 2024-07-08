@@ -1,5 +1,7 @@
 // ignore_for_file: camel_case_types
+import 'package:electronica_zurita/app/components/ClienteInfo.dart';
 import 'package:electronica_zurita/app/components/app_colors.dart';
+import 'package:electronica_zurita/models/ClienteProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/Equipo.dart';
@@ -13,8 +15,7 @@ class ListPage extends StatefulWidget {
   State<ListPage> createState() => _ListPageState();
 }
 
-class _ListPageState extends State<ListPage>
-    with AutomaticKeepAliveClientMixin<ListPage> {
+class _ListPageState extends State<ListPage> with AutomaticKeepAliveClientMixin<ListPage> {
   final List<String> estados = ['Pendiente', 'En proceso', 'Finalizado'];
   final List<String> tiposServicio = ['Mantenimiento', 'Reparación', 'Revisión'];
 
@@ -25,6 +26,7 @@ class _ListPageState extends State<ListPage>
   void initState() {
     super.initState();
     Provider.of<EquipoProvider>(context, listen: false).fetchEquipos();
+    Provider.of<ClienteProvider>(context, listen: false).fetchClienteInfo(); // Asegúrate de que los datos del cliente se obtengan
   }
 
   @override
@@ -32,6 +34,7 @@ class _ListPageState extends State<ListPage>
     super.build(context); // Llamar a super.build para mantener el estado
 
     final equipoProvider = Provider.of<EquipoProvider>(context);
+    final clienteProvider = Provider.of<ClienteProvider>(context);
     final List<Equipo> equipos = equipoProvider.equipos;
 
     // Filtrar equipos según el estado seleccionado
@@ -49,10 +52,10 @@ class _ListPageState extends State<ListPage>
           Expanded(
             child: RefreshIndicator(
               onRefresh: () async {
-                await Provider.of<EquipoProvider>(context, listen: false)
-                    .fetchEquipos();
+                await Provider.of<EquipoProvider>(context, listen: false).fetchEquipos();
+                await Provider.of<ClienteProvider>(context, listen: false).fetchClienteInfo();
               },
-              child: equipoProvider.isLoading
+              child: equipoProvider.isLoading || clienteProvider.isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : equiposFiltrados.isEmpty
                   ? ListView(
@@ -73,11 +76,11 @@ class _ListPageState extends State<ListPage>
                               textAlign: TextAlign.center,
                             ),
                             Text(
-                              "Desliza para actualizar tu lista de equipos. ",
+                              "Desliza para actualizar tu lista de equipos.",
                               textAlign: TextAlign.center,
-                            )
+                            ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -106,7 +109,16 @@ class _ListPageState extends State<ListPage>
                         ),
                       EquipoCard(
                         equipo: equipo,
-                        piezas: const [],
+                        piezas: const [], // Suponiendo que tienes una lista de piezas, pásala aquí
+                        cliente: ClienteInfo(
+                          nombreCliente: clienteProvider.nombreCliente ?? 'No disponible',
+                          cedulaCliente: clienteProvider.cedulaCliente ?? 'No disponible',
+                          direccionCliente: clienteProvider.direccionCliente ?? 'No disponible',
+                          telefonoCliente: clienteProvider.telefonoCliente ?? 'No disponible',
+                          correoCliente: clienteProvider.correoCliente ?? 'No disponible',
+                          frecuente: false,
+                          // otros campos del cliente aquí
+                        ),
                       ),
                     ],
                   );

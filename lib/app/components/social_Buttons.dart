@@ -1,3 +1,4 @@
+import 'package:electronica_zurita/app/components/ClienteInfo.dart';
 import 'package:electronica_zurita/app/components/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_buttons/social_media_buttons.dart';

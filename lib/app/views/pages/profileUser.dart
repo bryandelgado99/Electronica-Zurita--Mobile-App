@@ -82,7 +82,7 @@ class _profilePageState extends State<profilePage> {
                     child: Text("Políticas de Privacidad")
                 ),
                 const SizedBox(height: 15,),
-                const Text("Version: 1.0.1 + 1", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w100, color: Colors.grey), textAlign: TextAlign.right,),
+                const Text("Version: 1.2.1", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w100, color: Colors.grey), textAlign: TextAlign.right,),
               ],
             ),
           ),
