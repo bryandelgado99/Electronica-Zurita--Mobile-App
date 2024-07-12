@@ -1,5 +1,8 @@
 import 'package:electronica_zurita/utilities/navigator_rules.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../Login.dart';
 
 class pageElement extends StatefulWidget {
   const pageElement({super.key, required this.title, required this.description, required this.isSkipped, required this.path, required this.onTab, required this.color});
@@ -20,11 +23,16 @@ class _pageElementState extends State<pageElement> {
   bool _isLoading = false;
 
   void _onNextPressed() async {
+    final prefs = await SharedPreferences.getInstance();
     setState(() {
       _isLoading = true;
     });
 
-    await Future.delayed(Duration(seconds: 8));
+    await prefs.setBool('showOnBoardScreen', false);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginScreen()),
+    );
 
     setState(() {
       _isLoading = false;

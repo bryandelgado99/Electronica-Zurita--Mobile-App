@@ -11,7 +11,6 @@ import 'models/equiposProvider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Obtén la preferencia para saber si se debe mostrar la pantalla de bienvenida
   final prefs = await SharedPreferences.getInstance();
   final showOnBoardScreen = prefs.getBool('showOnBoardScreen') ?? true;
 
@@ -67,7 +66,6 @@ class MyApp extends StatelessWidget {
         ),
         bottomSheetTheme: const BottomSheetThemeData(backgroundColor: AppColors.contrastColor),
       ),
-      // Decide la pantalla de inicio dependiendo del valor de showOnBoardScreen
       home: showOnBoardScreen ? OnBoardScreen() : LoginScreen(),
       builder: EasyLoading.init(),
     );
