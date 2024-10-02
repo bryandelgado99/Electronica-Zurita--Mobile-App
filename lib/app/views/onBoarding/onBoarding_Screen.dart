@@ -1,4 +1,5 @@
 import 'package:electronica_zurita/app/components/app_colors.dart';
+import 'package:electronica_zurita/app/views/onBoarding/newPageElement.dart';
 import 'package:electronica_zurita/app/views/onBoarding/pageElement.dart';
 import 'package:electronica_zurita/utilities/navigator_rules.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
   List<Widget> get _views => [
     page_One(_onNextPage),
     page_Two(_onNextPage),
+    pageOutlaw(_onNextPage),
     page_Three(_onNextPage),
   ];
 
@@ -52,9 +54,9 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
             },
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height/1.75,
             right: 0,
             left: 0,
+            bottom: 50,
             child: Column(
               children: [
                 Row(
@@ -87,10 +89,10 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
       duration: Duration(microseconds: 300),
       height: 8,
       width: 42,
-      margin: const EdgeInsets.only(right: 8),
+      margin: const EdgeInsets.only(right: 9),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(50)),
-          color: Colors.white
+          color: AppColors.primaryColor
       ),
     );
   }
@@ -99,10 +101,10 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
       duration: Duration(microseconds: 300),
       height: 8,
       width: 8,
-      margin: const EdgeInsets.only(right: 8),
+      margin: const EdgeInsets.only(right: 9),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(50)),
-          color: Colors.grey
+          color: AppColors.contrastColor
       ),
     );
   }
@@ -131,6 +133,17 @@ Widget page_Two(VoidCallback onNextPage) {
   );
 }
 
+Widget pageOutlaw(VoidCallback onNextPage){
+  return NewPageElement(
+    title: "Mantente en contacto con nosotros",
+    description: "Agrega nuestro nuevo widget a tu pantalla de inicio y mantente conectado con tu técnico de confianza.",
+    isSkipped: true,
+    path: "assets/images/homescreen.png",
+    onTab: onNextPage,
+    color: AppColors.primaryColor,
+  );
+}
+
 Widget page_Three(VoidCallback onNextPage) {
   return pageElement(
     title: "Observa las proformas de reparación",
@@ -138,6 +151,6 @@ Widget page_Three(VoidCallback onNextPage) {
     isSkipped: false,
     path: "assets/images/undraw_Receipt_re_fre3.png",
     onTab: onNextPage,
-    color: AppColors.contrastColor,
+    color: AppColors.secondaryColor,
   );
 }
