@@ -1,4 +1,3 @@
-import 'package:electronica_zurita/app/components/app_colors.dart';
 import 'package:electronica_zurita/utilities/navigator_rules.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -23,20 +23,6 @@ class NewPageElement extends StatefulWidget {
 }
 
 class _NewPageElementState extends State<NewPageElement> {
-  bool _isLoading = false;
-
-  void _onNextPressed() {
-    setState(() {
-      _isLoading = true;
-    });
-
-    // Aquí puedes agregar tu lógica de navegación o cualquier otra acción
-    Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        _isLoading = false;
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
