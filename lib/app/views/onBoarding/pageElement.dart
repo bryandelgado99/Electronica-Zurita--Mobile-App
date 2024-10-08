@@ -57,7 +57,7 @@ class _pageElementState extends State<pageElement> {
               child: Image.asset(widget.path, scale: 2.15),
             ),
           ),
-          Container(
+          SizedBox(
             height: screenHeight * 0.50,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -66,11 +66,11 @@ class _pageElementState extends State<pageElement> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(widget.title, style: TextStyle(fontWeight: FontWeight.w600, color: widget.color, fontSize: 20), textAlign: TextAlign.center,),
-                  SizedBox(height: 40),
-                  Text(widget.description, style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16, color: Colors.black), textAlign: TextAlign.center),
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
+                  Text(widget.description, style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 16, color: Colors.black), textAlign: TextAlign.center),
+                  const SizedBox(height: 40),
                   actionComponents(),
-                  SizedBox(height: 80),
+                  const SizedBox(height: 80),
                 ],
               ),
             ),
@@ -90,10 +90,10 @@ class _pageElementState extends State<pageElement> {
           GestureDetector(
             onTap: widget.onTab,
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: IconButton.filled(
                 onPressed: widget.onTab,
-                icon: Icon(Icons.arrow_forward_rounded, size: 20, color: Colors.white),
+                icon: const Icon(Icons.arrow_forward_rounded, size: 20, color: Colors.white),
               ),
             ),
           )
@@ -103,13 +103,13 @@ class _pageElementState extends State<pageElement> {
       SizedBox(
           width: MediaQuery.of(context).size.width,
           child:  _isLoading
-              ? Center(child: CircularProgressIndicator())
+              ? const Center(child: CircularProgressIndicator())
               : FilledButton(
                 style: ButtonStyle(
                   backgroundColor: WidgetStatePropertyAll<Color>(widget.color)
                 ),
                 onPressed: _onNextPressed,
-                child: Text("Empecemos")
+                child: const Text("Empecemos")
           )
       ),
     );

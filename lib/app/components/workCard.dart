@@ -133,10 +133,10 @@ class _EquipoCardState extends State<EquipoCard> {
                 if (widget.equipo.servicio == 'Reparación' &&
                     widget.equipo.estado == 'Pendiente') ...[
                   const SizedBox(height: 20),
-                  Center(
+                  const Center(
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: const Row(
+                      padding: EdgeInsets.all(8.0),
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.dangerous_rounded, color: AppColors.secondaryColor),

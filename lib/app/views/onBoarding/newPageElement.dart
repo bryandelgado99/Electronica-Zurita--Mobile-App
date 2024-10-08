@@ -39,7 +39,7 @@ class _NewPageElementState extends State<NewPageElement> {
               child: Image.asset(widget.path, scale: 2.15),
             ),
           ),
-          Container(
+          SizedBox(
             height: screenHeight * 0.50,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -67,7 +67,7 @@ class _NewPageElementState extends State<NewPageElement> {
                     ),
                     const SizedBox(height: 40),
                     _composeAction(context),
-                    SizedBox(height: 80),
+                    const SizedBox(height: 80),
                   ],
                 ),
               ),
@@ -94,12 +94,12 @@ class _NewPageElementState extends State<NewPageElement> {
                       }
                   );
                 },
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Icon(Icons.widgets_rounded),
-                    const SizedBox(width: 12,),
+                    SizedBox(width: 12,),
                     Text("Agregar Widget")
                   ],
                 )
@@ -107,10 +107,10 @@ class _NewPageElementState extends State<NewPageElement> {
             GestureDetector(
               onTap: widget.onTab,
               child: Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: IconButton.filled(
                   onPressed: widget.onTab,
-                  icon: Icon(Icons.arrow_forward_rounded, size: 20, color: Colors.white),
+                  icon: const Icon(Icons.arrow_forward_rounded, size: 20, color: Colors.white),
                 ),
               ),
             ),
@@ -122,11 +122,11 @@ class _NewPageElementState extends State<NewPageElement> {
 
 AlertDialog onCallAddDialog(BuildContext context){
   return AlertDialog(
-    title: Row(
+    title: const Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Icon(Icons.widgets_rounded),
-        const SizedBox(width: 12,),
+        SizedBox(width: 12,),
         Text("Agregar Widget", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),)
       ],
     ),
@@ -151,9 +151,9 @@ AlertDialog onCallAddDialog(BuildContext context){
           ),
         ),
         const SizedBox(height: 30,),
-        Text("Vas a agregar el widget de Electrónica Zuita a tu pantalla de inicio."),
+        const Text("Vas a agregar el widget de Electrónica Zuita a tu pantalla de inicio."),
         const SizedBox(height: 15,),
-        Text("¿Deseas continuar?", style: TextStyle(fontWeight: FontWeight.w500),)
+        const Text("¿Deseas continuar?", style: TextStyle(fontWeight: FontWeight.w500),)
       ],
     ),
     actionsAlignment: MainAxisAlignment.end,
@@ -162,11 +162,11 @@ AlertDialog onCallAddDialog(BuildContext context){
           onPressed: (){
             Navigator.pop(context);
           },
-          child: Text("Cancelar")
+          child: const Text("Cancelar")
       ),
       TextButton(
         onPressed: (){},
-        child: Text("Agregar"),
+        child: const Text("Agregar"),
       )
     ],
   );

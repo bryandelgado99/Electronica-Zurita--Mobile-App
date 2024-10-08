@@ -23,7 +23,7 @@ class PrivacypolitState extends State<Privacypolit> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      content: Container(
+      content: SizedBox(
         width: double.maxFinite,
         height: 400, // Adjust the height as needed
         child: WebViewWidget(
@@ -35,7 +35,7 @@ class PrivacypolitState extends State<Privacypolit> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text('Cerrar'),
+          child: const Text('Cerrar'),
         ),
       ],
     );

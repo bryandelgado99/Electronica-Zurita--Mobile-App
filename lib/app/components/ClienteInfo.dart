@@ -116,7 +116,7 @@ class ClienteInfo extends StatelessWidget {
                     ],
                   ),
                   IconButton(
-                    icon: Icon(Icons.key_rounded),
+                    icon: const Icon(Icons.key_rounded),
                     tooltip: "Cambiar contraseña",
                     onPressed: () {
                       _showCorreoDialog(context, value);
@@ -142,14 +142,14 @@ class ClienteInfo extends StatelessWidget {
               dismissible: false,
             ),
             AlertDialog(
-              title: Column(
+              title: const Column(
                 children: [
                   Icon(Icons.lock_clock_rounded, size: 25,),
-                  const SizedBox(height: 8,),
+                  SizedBox(height: 8,),
                   Text('Cambiar contraseña'),
                 ],
               ),
-              content: Column(
+              content: const Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -163,13 +163,13 @@ class ClienteInfo extends StatelessWidget {
                     _recuperarContrasena(correo);
                     Navigator.of(context).pop();
                   },
-                  child: Text('Enviar'),
+                  child: const Text('Enviar'),
                 ),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('Cancelar'),
+                  child: const Text('Cancelar'),
                 ),
               ],
             ),

@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../main.dart';
-import '../views/logoutView.dart';
 
 class headerPartials extends StatelessWidget implements PreferredSizeWidget {
   const headerPartials({super.key});
@@ -26,7 +25,7 @@ class headerPartials extends StatelessWidget implements PreferredSizeWidget {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.asset('assets/images/logo_bn@2x.png', width: 60),
+                Image.asset('assets/images/icon.png', width: 60),
                 const Spacer(),
                 FilledButton(
                   style: const ButtonStyle(

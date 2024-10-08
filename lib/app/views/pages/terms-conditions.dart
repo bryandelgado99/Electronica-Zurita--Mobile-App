@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class TermsConditions extends StatefulWidget {
-  const TermsConditions({Key? key}) : super(key: key);
+  const TermsConditions({super.key});
 
   @override
   _TermsConditionsState createState() => _TermsConditionsState();
@@ -22,7 +22,7 @@ class _TermsConditionsState extends State<TermsConditions> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      content: Container(
+      content: SizedBox(
         width: double.maxFinite,
         height: 400, // Adjust the height as needed
         child: WebViewWidget(
@@ -34,7 +34,7 @@ class _TermsConditionsState extends State<TermsConditions> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text('Cerrar'),
+          child: const Text('Cerrar'),
         ),
       ],
     );

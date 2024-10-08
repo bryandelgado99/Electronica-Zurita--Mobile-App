@@ -1,4 +1,3 @@
-import 'package:electronica_zurita/app/components/ClienteInfo.dart';
 import 'package:electronica_zurita/app/components/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_buttons/social_media_buttons.dart';
@@ -34,7 +33,7 @@ Widget instaLink() {
     target: LinkTarget.blank,
     builder: (BuildContext ctx, FollowLink? followLink) {
       return IconButton(
-        icon: Icon(SocialMediaIcons.instagram, color: AppColors.primaryColor, size: 30,),
+        icon: const Icon(SocialMediaIcons.instagram, color: AppColors.primaryColor, size: 30,),
         onPressed: followLink,
       );
     },
@@ -49,7 +48,7 @@ Widget faceLink() {
     target: LinkTarget.blank,
     builder: (BuildContext ctx, FollowLink? followLink) {
       return IconButton(
-        icon: Icon(SocialMediaIcons.facebook, color: AppColors.primaryColor, size: 30,),
+        icon: const Icon(SocialMediaIcons.facebook, color: AppColors.primaryColor, size: 30,),
         onPressed: followLink,
       );
     },

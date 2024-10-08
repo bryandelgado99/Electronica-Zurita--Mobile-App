@@ -19,7 +19,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
   void _onNextPage() {
     if (_activePage < _views.length - 1) {
       _pageController.nextPage(
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.linear,
       );
     }
@@ -60,8 +60,8 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
             child: Column(
               children: [
                 Row(
-                  children: _buildIndicator(),
                   mainAxisAlignment: MainAxisAlignment.center,
+                  children: _buildIndicator(),
                 )
               ],
             ),
@@ -86,11 +86,11 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
 
   Widget _indicatorsTrue(){
     return AnimatedContainer(
-      duration: Duration(microseconds: 300),
+      duration: const Duration(microseconds: 300),
       height: 8,
       width: 42,
       margin: const EdgeInsets.only(right: 9),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(50)),
           color: AppColors.primaryColor
       ),
@@ -98,11 +98,11 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
   }
   Widget _indicatorsFalse(){
     return AnimatedContainer(
-      duration: Duration(microseconds: 300),
+      duration: const Duration(microseconds: 300),
       height: 8,
       width: 8,
       margin: const EdgeInsets.only(right: 9),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(50)),
           color: AppColors.contrastColor
       ),

@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
         ),
         bottomSheetTheme: const BottomSheetThemeData(backgroundColor: AppColors.contrastColor),
       ),
-      home: showOnBoardScreen ? OnBoardScreen() : LoginScreen(),
+      home: showOnBoardScreen ? const OnBoardScreen() : LoginScreen(),
       builder: EasyLoading.init(),
     );
   }

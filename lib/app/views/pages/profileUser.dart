@@ -56,7 +56,7 @@ class _profilePageState extends State<profilePage> {
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 50),
                 ),
-                socialButtons(),
+                const socialButtons(),
                 const SizedBox(height: 6,),
                 // Botones de términos y condiciones
                 TextButton(
@@ -64,25 +64,25 @@ class _profilePageState extends State<profilePage> {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return TermsConditions();
+                          return const TermsConditions();
                         },
                       );
                     },
-                    child: Text("Términos y Condiciones")
+                    child: const Text("Términos y Condiciones")
                 ),
                 TextButton(
                     onPressed: (){
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return Privacypolit();
+                          return const Privacypolit();
                         },
                       );
                     },
-                    child: Text("Políticas de Privacidad")
+                    child: const Text("Políticas de Privacidad")
                 ),
                 const SizedBox(height: 15,),
-                const Text("Version: 1.2.1", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w100, color: Colors.grey), textAlign: TextAlign.right,),
+                const Text("Version: 1.3.1", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w100, color: Colors.grey), textAlign: TextAlign.right,),
               ],
             ),
           ),

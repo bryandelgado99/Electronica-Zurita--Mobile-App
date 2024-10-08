@@ -22,8 +22,8 @@ class commonButton extends StatelessWidget {
   Widget build(BuildContext context) {
 
     double screenWidth = MediaQuery.of(context).size.width;
-    double textSize = screenWidth * 0.045;
-    double paddingSize = screenWidth * 0.04;
+    double textSize = screenWidth * 0.035;
+    double paddingSize = screenWidth * 0.03;
 
     return Padding(
       padding: EdgeInsets.all(paddingSize),

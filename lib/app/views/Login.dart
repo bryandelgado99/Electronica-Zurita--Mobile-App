@@ -296,12 +296,12 @@ class _LoginScreenState extends State<LoginScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Center(
+          title: const Center(
             child: Column(
               children: [
-                const Icon(Icons.warning_rounded, size: 30, color: AppColors.secondaryColor,),
-                const SizedBox(height: 8,),
-                const Text('Error al iniciar sesión', style: TextStyle(color: AppColors.contrastColor, fontWeight: FontWeight.w400)),
+                Icon(Icons.warning_rounded, size: 30, color: AppColors.secondaryColor,),
+                SizedBox(height: 8,),
+                Text('Error al iniciar sesión', style: TextStyle(color: AppColors.contrastColor, fontWeight: FontWeight.w400)),
               ],
             ),
           ),

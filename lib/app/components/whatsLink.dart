@@ -10,14 +10,14 @@ class Whatslink extends StatelessWidget {
   final Equipo equipo;
 
   const Whatslink({
-    Key? key,
+    super.key,
     required this.cliente,
     required this.equipo,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    final String phoneNumber = '593995603471';
+    const String phoneNumber = '593995603471';
     String message = 'Hola, buen día! Le saluda su cliente, ${cliente.nombreCliente}. Quisiera información sobre la proforma generada, para la orden Nro. ${equipo.numOrden} de mi equipo, por favor.';
     final Uri url = Uri.parse('https://wa.me/$phoneNumber?text=${Uri.encodeComponent(message)}');
 
@@ -26,15 +26,15 @@ class Whatslink extends StatelessWidget {
       target: LinkTarget.blank,
       builder: (BuildContext ctx, FollowLink? followLink) {
         return FilledButton(
-          child: Row(
+          onPressed: followLink,
+          child: const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(SocialMediaIcons.whatsapp, color: Colors.white, size: 20,),
-              const SizedBox(width: 8,),
+              SizedBox(width: 8,),
               Text("Servicio al Cliente")
             ],
           ),
-          onPressed: followLink,
         );
       },
     );
