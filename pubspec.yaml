@@ -54,6 +54,7 @@ dependencies:
   webview_flutter: ^4.8.0
   fluttertoast: ^8.2.6
   home_widget: ^0.7.0
+  intl: ^0.18.1
 
 
 dev_dependencies:

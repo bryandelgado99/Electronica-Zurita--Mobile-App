@@ -24,66 +24,66 @@ class _profilePageState extends State<profilePage> {
       body: Stack(
         children: [
           SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(height: 10,),
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Center(child: Column(
-                        children: [
-                          const Text("Bienvenido/a", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),),
-                          Text("${clienteProvider.nombreCliente ?? 'Cargando...'}!", style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 22),)
-                        ],
-                      )),
-                    ],
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 10,),
+                  Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Center(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(25),
+                              child: Icon(Icons.person_rounded, size: 50,),
+                            )
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 25,),
-                ClienteInfo(
-                  nombreCliente: clienteProvider.nombreCliente ?? '',
-                  cedulaCliente: clienteProvider.cedulaCliente ?? '',
-                  direccionCliente: clienteProvider.direccionCliente ?? '',
-                  telefonoCliente: clienteProvider.telefonoCliente ?? '',
-                  correoCliente: clienteProvider.correoCliente ?? '',
-                  frecuente: clienteProvider.frecuente ?? false,
-                ),
-                const SizedBox(height: 25,),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 50),
-                ),
-                const socialButtons(),
-                const SizedBox(height: 6,),
-                // Botones de términos y condiciones
-                TextButton(
-                    onPressed: (){
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return const TermsConditions();
-                        },
-                      );
-                    },
-                    child: const Text("Términos y Condiciones")
-                ),
-                TextButton(
-                    onPressed: (){
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return const Privacypolit();
-                        },
-                      );
-                    },
-                    child: const Text("Políticas de Privacidad")
-                ),
-                const SizedBox(height: 15,),
-                const Text("Version: 1.3.1", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w100, color: Colors.grey), textAlign: TextAlign.right,),
-              ],
+                  const SizedBox(height: 25,),
+                  ClienteInfo(
+                    nombreCliente: clienteProvider.nombreCliente ?? '',
+                    cedulaCliente: clienteProvider.cedulaCliente ?? '',
+                    direccionCliente: clienteProvider.direccionCliente ?? '',
+                    telefonoCliente: clienteProvider.telefonoCliente ?? '',
+                    correoCliente: clienteProvider.correoCliente ?? '',
+                    frecuente: clienteProvider.frecuente ?? false,
+                  ),
+                  const SizedBox(height: 25,),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 50),
+                  ),
+                  const socialButtons(),
+                  const SizedBox(height: 6,),
+                  // Botones de términos y condiciones
+                  TextButton(
+                      onPressed: (){
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const TermsConditions();
+                          },
+                        );
+                      },
+                      child: const Text("Términos y Condiciones")
+                  ),
+                  TextButton(
+                      onPressed: (){
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const Privacypolit();
+                          },
+                        );
+                      },
+                      child: const Text("Políticas de Privacidad")
+                  ),
+                ],
+              ),
             ),
           ),
           if (clienteProvider.isLoading)

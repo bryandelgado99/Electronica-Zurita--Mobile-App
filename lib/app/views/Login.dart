@@ -1,6 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api
 
 import 'dart:convert';
+import 'package:electronica_zurita/app/views/sidebar/HomeCompose.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -69,34 +70,38 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: IntrinsicHeight(
                       child: Column(
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                            child: Column(
-                              children: [
-                                titleHome(color_text: Colors.black),
-                                SizedBox(height: 10,),
-                                svgImage(asset_url: 'assets/vectors/electrician.svg', semantic_label: 'Pana', width: 290),
-                                SizedBox(height: 10,),
-                                cardComposse(
-                                    color: AppColors.contrastColor,
-                                    borderRadius: 20,
-                                    text_data: "Recuerda que debes iniciar sesión con las credenciales enviadas a tu correo electrónico, luego de ingresar la orden de trabajo de tu equipo.",
-                                    color_text: AppColors.bgColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    textAlign: TextAlign.center
+                          Expanded(
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 12),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    titleHome(color_text: Colors.black),
+                                    svgImage(asset_url: 'assets/vectors/electrician.svg', semantic_label: 'Pana', width: 320),
+                                    cardComposse(
+                                        color: AppColors.contrastColor,
+                                        borderRadius: 20,
+                                        text_data: "Recuerda que debes iniciar sesión con las credenciales enviadas a tu correo electrónico, luego de ingresar la orden de trabajo de tu equipo.",
+                                        color_text: AppColors.bgColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        textAlign: TextAlign.center
+                                    )
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
                           ),
-                          Expanded(
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25)),
-                                color: AppColors.contrastColor,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 40),
+                          Container(
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+                              color: AppColors.contrastColor,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 50),
+                              child: Center(
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
@@ -275,7 +280,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.pushReplacement(
           // ignore: use_build_context_synchronously
           context,
-          MaterialPageRoute(builder: (context) => const homeScreen()),
+          MaterialPageRoute(builder: (context) => const Homecompose()) //homeScreen()),
         );
       } else {
         // Maneja los errores de inicio de sesión mostrando un AlertDialog
