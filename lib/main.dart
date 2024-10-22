@@ -1,5 +1,4 @@
 import 'package:electronica_zurita/app/views/onBoarding/onBoarding_Screen.dart';
-import 'package:electronica_zurita/app/views/sidebar/HomeCompose.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';

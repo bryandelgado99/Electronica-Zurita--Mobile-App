@@ -12,7 +12,6 @@ import '../../models/dataUser.dart';
 import '../components/RestaurarPwsd.dart';
 import '../components/app_colors.dart';
 import '../components/commonButtons.dart';
-import 'package:electronica_zurita/app/views/Home.dart';
 import '../components/decorations/cardComposse.dart';
 import '../components/decorations/svgImage.dart';
 import '../components/decorations/textBtn.dart';

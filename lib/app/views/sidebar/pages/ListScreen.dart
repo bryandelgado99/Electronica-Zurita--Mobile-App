@@ -1,8 +1,6 @@
 import 'package:electronica_zurita/app/views/pages/listPage.dart';
 import 'package:flutter/material.dart';
 
-import '../../../components/app_colors.dart';
-
 class Listscreen extends StatefulWidget {
   const Listscreen({super.key, required this.title});
 
@@ -23,7 +21,10 @@ class _ListscreenState extends State<Listscreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListPage(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
+        child: ListPage(),
+      ),
     );
   }
 }
